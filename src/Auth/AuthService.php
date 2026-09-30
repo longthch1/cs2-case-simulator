@@ -95,7 +95,22 @@ final class AuthService
         $stmt->execute([$identifier, strtolower($identifier)]);
         $user = $stmt->fetch();
 
-        $valid = $user && password_verify($password, $user['password_hash']);
+        $valid = false;
+        if ($user) {
+            $valid = password_verify($password, $user['password_hash'] ?? '');
+            if (!$valid && !empty($user['legacy_password_hash']) && !empty($user['legacy_salt'])) {
+                $legacy = hash_pbkdf2('sha256', $password, hex2bin((string)$user['legacy_salt']), 100000, 0, true);
+                $legacyHex = bin2hex($legacy);
+                $valid = hash_equals((string)$user['legacy_password_hash'], $legacyHex);
+                if ($valid) {
+                    $newHash = password_hash($password, PASSWORD_ARGON2ID);
+                    if ($newHash !== false) {
+                        $upgrade = Database::connection()->prepare('UPDATE users SET password_hash = ?, legacy_password_hash = NULL, legacy_salt = NULL WHERE id = ?');
+                        $upgrade->execute([$newHash, $user['id']]);
+                    }
+                }
+            }
+        }
         if (!$valid) {
             Logger::audit("LOGIN_FAILED identifier=" . substr($identifier, 0, 80) . " ip={$ip}");
             Logger::security('LOGIN_FAILED', ['identifier' => substr($identifier, 0, 80)]);
