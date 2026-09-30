@@ -28,7 +28,7 @@ rm -rf "${APP_DIR}/public/static"
 ln -s "${APP_DIR}/static" "${APP_DIR}/public/static"
 
 sed "s#php8.3-fpm.sock#php${PHP_VERSION}-fpm.sock#g" \
-  "\${APP_DIR}/apache/cs2-case-simulator.conf" \
+  "${APP_DIR}/apache/cs2-case-simulator.conf" \
   > /etc/apache2/sites-available/cs2-case-simulator.conf
 
 a2enmod rewrite proxy proxy_fcgi headers
