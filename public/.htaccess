@@ -3,6 +3,7 @@ DirectoryIndex index.php
 RewriteEngine On
 
 RewriteRule ^api(?:/.*)?$ api.php [L,QSA]
+RewriteRule ^metrics$ api.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
