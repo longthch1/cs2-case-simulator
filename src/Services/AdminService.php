@@ -76,7 +76,8 @@ final class AdminService
         $sql .= " GROUP BY u.id ORDER BY u.created_at DESC, u.id DESC LIMIT {$limit}";
         $stmt = Database::connection()->prepare($sql);
         $stmt->execute($params);
-        return ['users'=>$stmt->fetchAll(),'total'=>count($stmt->fetchAll())];
+        $rows = $stmt->fetchAll();
+        return ['users'=>$rows,'total'=>count($rows)];
     }
 
     public static function adjustBalance(int $targetId, array $input, array $admin): array
@@ -137,7 +138,8 @@ final class AdminService
             WHERE i.user_id=? ORDER BY i.acquired_at DESC, i.id DESC
         ');
         $stmt->execute([$targetId]);
-        return ['username'=>$target['username'],'items'=>$stmt->fetchAll(),'count'=>$stmt->rowCount()];
+        $items = $stmt->fetchAll();
+        return ['username'=>$target['username'],'items'=>$items,'count'=>count($items)];
     }
 
     public static function cases(): array
