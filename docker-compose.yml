@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  cs2-simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cs2-case-simulator
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - SECRET_KEY=cs2-super-secret-key-change-this-in-production-vault
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=Admin@123456
+      - ADMIN_EMAIL=admin@cs2cases.local
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')\" || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - cs2-network
+
+networks:
+  cs2-network:
+    driver: bridge

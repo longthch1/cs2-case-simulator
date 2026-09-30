@@ -1,0 +1,432 @@
+/* ==========================================================================
+   CS2 CASE SIMULATOR - DESIGN SYSTEM & TACTICAL UI
+   ========================================================================== */
+
+:root {
+  --bg-main: #0b0e14;
+  --bg-card: #131822;
+  --bg-card-hover: #1a2230;
+  --bg-overlay: rgba(8, 11, 16, 0.85);
+  --border-color: #212a3d;
+  --border-highlight: #3b4866;
+  
+  --cs-orange: #e58e26;
+  --cs-orange-glow: rgba(229, 142, 38, 0.35);
+  --cs-blue: #4b69ff;
+  --cs-purple: #8847ff;
+  --cs-pink: #d32ce6;
+  --cs-red: #eb4b4b;
+  --cs-gold: #ffd700;
+  --cs-stattrak: #cf6a32;
+  
+  --text-main: #e2e8f0;
+  --text-muted: #8492a6;
+  --text-dim: #4e5b73;
+
+  /* Animation presets */
+  --anim-fast:   0.15s;
+  --anim-normal: 0.25s;
+  --anim-slow:   0.4s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce:   cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Global GPU rendering baseline ── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 0%,  rgba(229,142,38,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 10% 30%, rgba(75,105,255,0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(235,75,75,0.04)  0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-highlight); }
+
+/* ── Typography ── */
+.font-tactical {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.glow-orange { box-shadow: 0 0 20px var(--cs-orange-glow); }
+
+/* ── Rarity Colours ── */
+.rarity-0,.rarity-consumer { color:#b0c3d9; border-color:#b0c3d9!important; }
+.bg-rarity-0 { background-color:#b0c3d9; }
+.rarity-1,.rarity-mil-spec { color:var(--cs-blue); border-color:var(--cs-blue)!important; }
+.bg-rarity-1 { background-color:var(--cs-blue); }
+.rarity-2,.rarity-restricted { color:var(--cs-purple); border-color:var(--cs-purple)!important; }
+.bg-rarity-2 { background-color:var(--cs-purple); }
+.rarity-3,.rarity-classified { color:var(--cs-pink); border-color:var(--cs-pink)!important; }
+.bg-rarity-3 { background-color:var(--cs-pink); }
+.rarity-4,.rarity-covert { color:var(--cs-red); border-color:var(--cs-red)!important; }
+.bg-rarity-4 { background-color:var(--cs-red); }
+.rarity-5,.rarity-special { color:var(--cs-gold); border-color:var(--cs-gold)!important; }
+.bg-rarity-5 { background-color:var(--cs-gold); }
+
+/* ── StatTrak Badge ── */
+.badge-stattrak {
+  background: linear-gradient(135deg, #a64d1c, #cf6a32);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(207,106,50,0.4);
+}
+
+/* ── Header Glass ── */
+.header-glass {
+  background: rgba(15,20,29,0.88);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--border-color);
+  transform: translateZ(0);       /* promote to GPU layer */
+}
+
+/* ==========================================================================
+   CASE CARD — GPU-accelerated hover
+   ========================================================================== */
+.case-card {
+  transition:
+    transform     var(--anim-normal) var(--ease-out-expo),
+    border-color  var(--anim-normal) ease,
+    box-shadow    var(--anim-normal) ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.case-card:hover {
+  transform: translate3d(0, -6px, 0) scale(1.01);
+  border-color: var(--cs-orange);
+  box-shadow:
+    0 14px 32px -6px rgba(229,142,38,0.26),
+    0  4px 10px -2px rgba(229,142,38,0.12);
+}
+.case-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(229,142,38,0.09) 0%, transparent 62%);
+  opacity: 0;
+  transition: opacity var(--anim-normal) ease;
+  pointer-events: none;
+}
+.case-card:hover::after { opacity: 1; }
+
+/* Case image zoom — sub-element GPU layer */
+.case-card img {
+  transition:
+    transform var(--anim-normal) var(--ease-out-expo),
+    filter    var(--anim-normal) ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.case-card:hover img {
+  transform: translate3d(0,-4px,0) scale(1.07);
+  filter: drop-shadow(0 8px 18px rgba(229,142,38,0.32));
+}
+
+/* ==========================================================================
+   SKIN CARD
+   ========================================================================== */
+.skin-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition:
+    transform    var(--anim-fast) var(--ease-out-expo),
+    border-color var(--anim-fast) ease,
+    box-shadow   var(--anim-fast) ease;
+  position: relative;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.skin-card:hover {
+  transform: translate3d(0, -4px, 0);
+  border-color: var(--border-highlight);
+  box-shadow: 0 8px 22px -4px rgba(0,0,0,0.42);
+}
+.skin-card-bottom-bar {
+  height: 4px;
+  width: 100%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* ==========================================================================
+   ROULETTE / SPINNER — GPU compositing
+   ========================================================================== */
+.roulette-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #090c12;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+  transform: translateZ(0);   /* create stacking context */
+  isolation: isolate;
+}
+
+.roulette-viewport {
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.roulette-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Critical: GPU-accelerated CSS animation */
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+}
+
+.roulette-item {
+  width: 160px;
+  height: 100%;
+  flex-shrink: 0;
+  padding: 12px 10px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #10151f 0%, #0c1017 100%);
+  position: relative;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+.roulette-item-bottom {
+  height: 4px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* Center Indicator Needle */
+.roulette-needle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: #ffd700;
+  transform: translateX(-50%) translateZ(0);
+  z-index: 20;
+  box-shadow: 0 0 14px #ffd700, 0 0 28px rgba(255,215,0,0.4);
+  will-change: box-shadow;
+}
+.roulette-needle::before,
+.roulette-needle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+.roulette-needle::before { top: 0;    border-top:    13px solid #ffd700; }
+.roulette-needle::after  { bottom: 0; border-bottom: 13px solid #ffd700; }
+
+/* Needle glow pulse during spin */
+@keyframes needleGlow {
+  0%,100% { box-shadow: 0 0 14px #ffd700, 0 0 28px rgba(255,215,0,0.4); }
+  50%     { box-shadow: 0 0 22px #ffd700, 0 0 52px rgba(255,215,0,0.72); }
+}
+.roulette-needle.spinning {
+  animation: needleGlow 0.28s ease-in-out infinite;
+}
+
+/* Edge gradient masks */
+.roulette-mask-left {
+  position: absolute; top:0; left:0; bottom:0;
+  width: 120px;
+  background: linear-gradient(to right, #090c12 20%, transparent 100%);
+  z-index: 10; pointer-events: none;
+  transform: translateZ(0);
+}
+.roulette-mask-right {
+  position: absolute; top:0; right:0; bottom:0;
+  width: 120px;
+  background: linear-gradient(to left, #090c12 20%, transparent 100%);
+  z-index: 10; pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* ==========================================================================
+   FLOAT GAUGE
+   ========================================================================== */
+.float-gauge-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right,
+    #22c55e 0%,#22c55e 7%,
+    #84cc16 7%,#84cc16 15%,
+    #eab308 15%,#eab308 38%,
+    #f97316 38%,#f97316 45%,
+    #ef4444 45%,#ef4444 100%
+  );
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+.float-gauge-marker {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.9);
+  transform: translateX(-50%) translateZ(0);
+  transition: left 0.35s var(--ease-out-expo);
+  will-change: left;
+}
+
+/* ==========================================================================
+   MODALS & REVEAL ANIMATIONS
+   ========================================================================== */
+.modal-backdrop {
+  background: rgba(4,6,10,0.88);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+}
+
+@keyframes dropPulse {
+  0%   { transform: scale3d(0.82,0.82,1); opacity:0; }
+  55%  { transform: scale3d(1.03,1.03,1); opacity:1; }
+  80%  { transform: scale3d(0.98,0.98,1); }
+  100% { transform: scale3d(1,1,1);       opacity:1; }
+}
+.animate-reveal {
+  animation: dropPulse 0.44s var(--ease-out-expo) both;
+  will-change: transform, opacity;
+}
+
+@keyframes slideUpFade {
+  from { transform: translate3d(0,18px,0); opacity:0; }
+  to   { transform: translate3d(0,0,0);    opacity:1; }
+}
+.animate-slide-up {
+  animation: slideUpFade 0.34s var(--ease-out-expo) both;
+  will-change: transform, opacity;
+}
+
+/* Hologram shine sweep */
+@keyframes shine {
+  0%   { transform: translate3d(-160%,0,0) rotate(25deg); }
+  100% { transform: translate3d(260%,0,0)  rotate(25deg); }
+}
+.hologram-shine {
+  position: relative;
+  overflow: hidden;
+}
+.hologram-shine::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent);
+  transform: rotate(25deg) translateZ(0);
+  animation: shine 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   TERMINAL
+   ========================================================================== */
+.log-terminal {
+  background: #080a0f;
+  border: 1px solid #1c2433;
+  font-family: 'Consolas','Monaco','Courier New',monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #a0aec0;
+  border-radius: 6px;
+  padding: 12px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+.log-line-info    { color: #63b3ed; }
+.log-line-warning { color: #ecc94b; }
+.log-line-error   { color: #f56565; }
+.log-line-audit   { color: #48bb78; }
+
+/* ==========================================================================
+   GLOW EFFECTS
+   ========================================================================== */
+@keyframes goldPulse {
+  0%,100% { box-shadow: 0 0 22px rgba(255,215,0,0.3); }
+  50%     { box-shadow: 0 0 50px rgba(255,215,0,0.68); }
+}
+.gold-glow-box {
+  animation: goldPulse 2s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+/* ==========================================================================
+   BUTTON MICRO-INTERACTIONS
+   ========================================================================== */
+button { will-change: transform; }
+button:active {
+  transform: scale(0.96) translateZ(0) !important;
+  transition: transform 0.07s ease !important;
+}
+
+/* ==========================================================================
+   MULTI-ROULETTE COMPACT / MINI SIZES
+   ========================================================================== */
+.roulette-wrapper.compact .roulette-viewport { height: 145px; }
+.roulette-wrapper.compact .roulette-item { width: 135px; padding: 8px 6px; }
+.roulette-wrapper.compact .roulette-item img { height: 52px !important; }
+.roulette-wrapper.compact .roulette-item .text-xs { font-size: 0.72rem !important; }
+
+.roulette-wrapper.mini .roulette-viewport { height: 110px; }
+.roulette-wrapper.mini .roulette-item { width: 115px; padding: 5px 4px; }
+.roulette-wrapper.mini .roulette-item img { height: 40px !important; }
+.roulette-wrapper.mini .roulette-item .text-xs { font-size: 0.65rem !important; line-height: 1.1; }
+.roulette-wrapper.mini .roulette-item .text-\[10px\] { font-size: 8px !important; }
+
+/* ==========================================================================
+   PERFORMANCE — prevent layout thrashing
+   ========================================================================== */
+#cases-grid { contain: layout style; }
+
+/* Smooth image fade-in on load */
+img { transition: opacity 0.2s ease; }
