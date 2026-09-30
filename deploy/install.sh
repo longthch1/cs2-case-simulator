@@ -14,20 +14,20 @@ apt-get update
 apt-get install -y apache2 mysql-server php php-cli php-fpm php-mysql php-sqlite3 php-mbstring php-xml php-curl git unzip
 
 PHP_VERSION="$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')"
-PHP_FPM_SERVICE="php\${PHP_VERSION}-fpm"
+PHP_FPM_SERVICE="php${PHP_VERSION}-fpm"
 
 systemctl enable --now apache2
 systemctl enable --now mysql
-systemctl enable --now "\${PHP_FPM_SERVICE}"
+systemctl enable --now "${PHP_FPM_SERVICE}"
 
-mkdir -p "\${LOG_DIR}" "\${STORAGE_DIR}"
-chown -R www-data:www-data "\${LOG_DIR}" "\${STORAGE_DIR}"
-chmod 0750 "\${LOG_DIR}" "\${STORAGE_DIR}"
+mkdir -p "${LOG_DIR}" "${STORAGE_DIR}"
+chown -R www-data:www-data "${LOG_DIR}" "${STORAGE_DIR}"
+chmod 0750 "${LOG_DIR}" "${STORAGE_DIR}"
 
-rm -rf "\${APP_DIR}/public/static"
-ln -s "\${APP_DIR}/static" "\${APP_DIR}/public/static"
+rm -rf "${APP_DIR}/public/static"
+ln -s "${APP_DIR}/static" "${APP_DIR}/public/static"
 
-sed "s#php8.3-fpm.sock#php\${PHP_VERSION}-fpm.sock#g" \
+sed "s#php8.3-fpm.sock#php${PHP_VERSION}-fpm.sock#g" \
   "\${APP_DIR}/apache/cs2-case-simulator.conf" \
   > /etc/apache2/sites-available/cs2-case-simulator.conf
 
