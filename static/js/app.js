@@ -5,6 +5,27 @@
 
 const API_BASE = window.location.origin;
 
+(function installCsrfFetchGuard() {
+    const nativeFetch = window.fetch.bind(window);
+
+    window.fetch = async function(input, init = {}) {
+        const options = { ...init };
+        const method = String(options.method || 'GET').toUpperCase();
+
+        if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+            const match = document.cookie.match(/(?:^|; )csrf_token=([^;]+)/);
+            if (match) {
+                const headers = new Headers(options.headers || {});
+                headers.set('X-CSRF-Token', decodeURIComponent(match[1]));
+                options.headers = headers;
+            }
+            options.credentials = options.credentials || 'same-origin';
+        }
+
+        return nativeFetch(input, options);
+    };
+})();
+
 function getFallbackCrateSvg(name) {
     const safeName = (name || 'CS2 Case').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="100%" height="100%" fill="%23131924" rx="12" stroke="%232b364c" stroke-width="2"/><path d="M70,60 L150,22 L230,60 L150,98 Z" fill="%23e58e26"/><path d="M70,60 L150,98 L150,178 L70,140 Z" fill="%23b86e18"/><path d="M230,60 L150,98 L150,178 L230,140 Z" fill="%2394540d"/><rect x="135" y="100" width="30" height="35" rx="4" fill="%23222b3d" stroke="%23ffd700" stroke-width="2"/><circle cx="150" cy="114" r="4" fill="%23ffd700"/><text x="150" y="166" font-family="sans-serif" font-size="12" font-weight="bold" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(safeName)}</text></svg>`;
@@ -20,7 +41,7 @@ function getFallbackWeaponSvg(weapon, skinName, rarityTier = 1) {
 
 class CS2App {
     constructor() {
-        this.token = localStorage.getItem('cs2_token') || null;
+        this.token = null;
         this.currentUser = null;
         this.cases = [];
         this.currentCase = null;
@@ -76,35 +97,22 @@ class CS2App {
     // ==========================================
 
     async checkAuthSession() {
-        if (!this.token) {
-            this.currentUser = null;
-            this.updateUserUI();
-            this.checkDailyBadge();
-            return;
-        }
-
         try {
-            const res = await fetch(`${API_BASE}/api/auth/me`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+            const res = await fetch(API_BASE + '/api/auth/me', {
+                credentials: 'same-origin'
             });
             if (res.ok) {
                 const data = await res.json();
                 this.currentUser = data.user;
-                this.updateUserUI();
-                this.checkDailyBadge();
             } else {
-                this.token = null;
                 this.currentUser = null;
-                localStorage.removeItem('cs2_token');
-                this.updateUserUI();
-                this.checkDailyBadge();
             }
         } catch (err) {
             console.error("Auth check failed:", err);
             this.currentUser = null;
-            this.updateUserUI();
-            this.checkDailyBadge();
         }
+        this.updateUserUI();
+        this.checkDailyBadge();
     }
 
     updateUserUI() {
@@ -252,8 +260,7 @@ class CS2App {
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    this.token = data.access_token;
-                    localStorage.setItem('cs2_token', this.token);
+                    this.token = null;
                     this.currentUser = data.user;
                     this.updateUserUI();
                     this.closeAuthModal();
@@ -295,8 +302,7 @@ class CS2App {
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    this.token = data.access_token;
-                    localStorage.setItem('cs2_token', this.token);
+                    this.token = null;
                     this.currentUser = data.user;
                     this.updateUserUI();
                     this.closeAuthModal();
@@ -349,10 +355,17 @@ class CS2App {
         }
     }
 
-    logout() {
+    async logout() {
+        try {
+            await fetch(API_BASE + '/api/auth/logout', {
+                method: 'POST',
+                credentials: 'same-origin'
+            });
+        } catch (e) {
+            console.warn("Logout request failed:", e);
+        }
         this.token = null;
         this.currentUser = null;
-        localStorage.removeItem('cs2_token');
         this.updateUserUI();
         this.checkDailyBadge();
         this.notify("Đã đăng xuất", "info");
@@ -365,7 +378,7 @@ class CS2App {
 
     async checkDailyBadge() {
         const dot = document.getElementById('daily-ready-dot');
-        if (!this.token) {
+        if (!this.currentUser) {
             if (dot) dot.classList.add('hidden');
             return;
         }
@@ -393,7 +406,7 @@ class CS2App {
     }
 
     async openDailyModal() {
-        if (!this.token) {
+        if (!this.currentUser) {
             this.notify("Vui lòng đăng nhập để nhận quà hàng ngày!", "info");
             this.openAuthModal('login');
             return;
@@ -496,7 +509,7 @@ class CS2App {
     }
 
     async claimDailyReward() {
-        if (!this.token) {
+        if (!this.currentUser) {
             this.openAuthModal('login');
             return;
         }
@@ -1213,7 +1226,7 @@ class CS2App {
     }
 
     async sellSingleFromMulti(inventoryId, value, btnEl) {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         try {
             btnEl.disabled = true;
             btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
@@ -1326,7 +1339,7 @@ class CS2App {
     // ==========================================
 
     async loadInventory(rarityFilter = null, sortBy = 'date_desc') {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         try {
             let url = `${API_BASE}/api/inventory?sort_by=${sortBy}`;
             if (rarityFilter && rarityFilter !== 'all') {
@@ -1898,7 +1911,7 @@ class CS2App {
     }
 
     async loadAdminOverview() {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         try {
             const res = await fetch(`${API_BASE}/api/admin/overview`, {
                 headers: { 'Authorization': `Bearer ${this.token}` }
@@ -1979,7 +1992,7 @@ class CS2App {
     }
 
     async loadAdminUsers() {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         const tbody = document.getElementById('adm-users-table-body');
         if (!tbody) return;
 
@@ -2241,7 +2254,7 @@ class CS2App {
     // --- GIFTCODE MANAGER ---
 
     async loadAdminGiftcode() {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         try {
             const res = await fetch(`${API_BASE}/api/admin/giftcode`, {
                 headers: { 'Authorization': `Bearer ${this.token}` }
@@ -2351,7 +2364,7 @@ class CS2App {
     // --- CASE & ECONOMY MANAGER ---
 
     async loadAdminCases() {
-        if (!this.token) return;
+        if (!this.currentUser) return;
         const tbody = document.getElementById('adm-cases-table-body');
         if (!tbody) return;
 
@@ -2553,7 +2566,7 @@ class CS2App {
     async fetchActiveHourlyCode() {
         try {
             const headers = {};
-            if (this.token) {
+            if (this.currentUser) {
                 headers['Authorization'] = `Bearer ${this.token}`;
             }
             const res = await fetch(`${API_BASE}/api/wallet/active-code`, { headers });
@@ -2620,7 +2633,7 @@ class CS2App {
 
     async handleRedeemCode(e) {
         e.preventDefault();
-        if (!this.token) {
+        if (!this.currentUser) {
             this.notify("Vui lòng đăng nhập trước khi nạp mã!", "info");
             this.openAuthModal('login');
             return;
