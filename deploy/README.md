@@ -16,9 +16,11 @@ sudo bash deploy/install.sh
 
 ## 3. Configure secrets
 
-cp .env.example .env
-chmod 640 .env
+sudo cp .env.example .env
+sudo chown root:www-data .env
+sudo chmod 640 .env
 # Set DB_PASSWORD and ADMIN_PASSWORD to strong production secrets.
+# Keep .env out of Git.
 
 ## 4. Create database and user
 
@@ -26,11 +28,11 @@ Edit deploy/setup-mysql.sql and replace CHANGE_ME... first, then:
 sudo mysql < deploy/setup-mysql.sql
 
 Then import schema:
-mysql -u cs2_app -p cs2_case_simulator < database/schema.sql
+sudo mysql cs2_case_simulator < database/schema.sql
 
 ## 5. Seed catalog/admin
 
-php database/seed.php
+sudo -u www-data php database/seed.php
 
 This reads the existing cases-data.js file, so the case/skin catalog is not duplicated into PHP.
 
