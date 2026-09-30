@@ -23,6 +23,14 @@ $started = microtime(true);
 $method = Request::method();
 $path = Request::path();
 
+register_shutdown_function(function () use ($started, $method, $path): void {
+    try {
+        MetricsService::recordRequest($method, $path, http_response_code() ?: 200, (microtime(true) - $started) * 1000);
+    } catch (Throwable $ignored) {
+        // Metrics persistence must never break the response.
+    }
+});
+
 set_exception_handler(function (Throwable $e): void {
     Logger::error($e->getMessage());
     if (Config::bool('APP_DEBUG', false)) {
