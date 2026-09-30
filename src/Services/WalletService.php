@@ -13,7 +13,7 @@ use DateTimeZone;
 
 final class WalletService
 {
-    private static function activeCode(PDO $pdo): array
+    private static function loadActiveCode(PDO $pdo): array
     {
         $stmt = $pdo->query('
             SELECT id, code, reward_amount, created_at, expires_at, is_active
@@ -53,7 +53,7 @@ final class WalletService
     public static function activeCode(?array $user): array
     {
         $pdo = Database::connection();
-        $code = self::activeCode($pdo);
+        $code = self::loadActiveCode($pdo);
         $hasRedeemed = false;
 
         if ($user) {
@@ -77,7 +77,7 @@ final class WalletService
         if (!preg_match('/^\d{6}$/', $code)) Response::error('Mã code phải gồm đúng 6 chữ số (ví dụ: 123456)!', 400);
 
         return Database::transaction(function(PDO $pdo) use ($code, $user): array {
-            $active = self::activeCode($pdo);
+            $active = self::loadActiveCode($pdo);
             if ($active['code'] !== $code) {
                 Response::error('Mã code không chính xác hoặc đã hết hiệu lực.', 400);
             }
