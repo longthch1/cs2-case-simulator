@@ -1,0 +1,719 @@
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:202] Default admin user created: admin
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:213] Demo player user created: demoplayer
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:215] Database schema initialized successfully.
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:170] Seeding CS2 Cases and Skins into database...
+[2026-09-29 18:08:14] [INFO] [cs2_simulator:192] Seeded 5 cases and their full weapon loadouts.
+[2026-09-29 18:11:04] [INFO] [cs2_simulator:28] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 18:11:04] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 18:11:04] [INFO] [cs2_simulator:215] Database schema initialized successfully.
+[2026-09-29 18:11:04] [INFO] [cs2_simulator:167] Database already contains 5 cases. Skipping seed.
+[2026-09-29 18:11:04] [INFO] [cs2_simulator:31] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 18:11:14] [ERROR] [cs2_simulator:75] Unhandled exception on /api/health: 'Settings' object has no attribute 'DATA_DIR'
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\main.py", line 61, in request_logging_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\security.py", line 111, in dispatch
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 91, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 149, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    |     await app(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 352, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\routes\monitoring.py", line 23, in health_check
+    |     total, used, free = shutil.disk_usage(settings.DATA_DIR)
+    |                                           ^^^^^^^^^^^^^^^^^
+    | AttributeError: 'Settings' object has no attribute 'DATA_DIR'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\main.py", line 61, in request_logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\security.py", line 111, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\longt\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\longt\.gemini\antigravity\scratch\cs2-case-simulator\app\routes\monitoring.py", line 23, in health_check
+    total, used, free = shutil.disk_usage(settings.DATA_DIR)
+                                          ^^^^^^^^^^^^^^^^^
+AttributeError: 'Settings' object has no attribute 'DATA_DIR'
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:28] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:215] Database schema initialized successfully.
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:167] Database already contains 5 cases. Skipping seed.
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:31] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 18:11:41] [INFO] [cs2_simulator:34] Shutting down CS2 Case Simulator Backend...
+[2026-09-29 18:11:56] [INFO] [cs2_simulator:28] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 18:11:56] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 18:11:56] [INFO] [cs2_simulator:215] Database schema initialized successfully.
+[2026-09-29 18:11:56] [INFO] [cs2_simulator:167] Database already contains 5 cases. Skipping seed.
+[2026-09-29 18:11:56] [INFO] [cs2_simulator:31] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 18:12:03] [INFO] [cs2_simulator:68] GET /api/health - 200 (11.7ms)
+[2026-09-29 18:12:10] [INFO] [cs2_simulator:68] GET /api/cases - 200 (3.3ms)
+[2026-09-29 18:12:17] [INFO] [cs2_simulator:68] GET /metrics - 200 (0.7ms)
+[2026-09-29 18:12:25] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (3.1ms)
+[2026-09-29 18:12:31] [INFO] [cs2_simulator:68] POST /api/cases/kilowatt-case/open - 422 (2.0ms)
+[2026-09-29 18:12:39] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (2.4ms)
+[2026-09-29 18:12:39] [WARNING] [cs2_simulator:33] Invalid token: Subject must be a string
+[2026-09-29 18:12:39] [INFO] [cs2_simulator:68] POST /api/cases/kilowatt-case/open - 401 (2.4ms)
+[2026-09-29 18:12:55] [WARNING] [cs2_simulator:33] Invalid token: Subject must be a string
+[2026-09-29 18:13:30] [INFO] [cs2_simulator:28] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 18:13:30] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 18:13:30] [INFO] [cs2_simulator:215] Database schema initialized successfully.
+[2026-09-29 18:13:30] [INFO] [cs2_simulator:167] Database already contains 5 cases. Skipping seed.
+[2026-09-29 18:13:30] [INFO] [cs2_simulator:31] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 18:13:47] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (5.1ms)
+[2026-09-29 18:13:47] [INFO] [cs2_simulator:68] POST /api/cases/kilowatt-case/open - 200 (12.1ms)
+[2026-09-29 18:13:58] [INFO] [cs2_simulator:68] GET /api/inventory - 401 (3.1ms)
+[2026-09-29 18:14:04] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (3.4ms)
+[2026-09-29 18:14:04] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.3ms)
+[2026-09-29 18:14:13] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (2.3ms)
+[2026-09-29 18:14:14] [INFO] [cs2_simulator:68] POST /api/inventory/1/sell - 200 (7.2ms)
+[2026-09-29 18:14:42] [INFO] [cs2_simulator:68] POST /api/auth/admin-login - 200 (3.7ms)
+[2026-09-29 18:14:42] [INFO] [cs2_simulator:68] GET /api/admin/overview - 200 (5.1ms)
+[2026-09-29 18:14:47] [INFO] [cs2_simulator:68] POST /api/auth/admin-login - 200 (2.3ms)
+[2026-09-29 18:14:47] [INFO] [cs2_simulator:68] GET /api/admin/logs - 200 (10.2ms)
+[2026-09-29 18:15:57] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (3.4ms)
+[2026-09-29 18:15:57] [INFO] [cs2_simulator:68] GET /api/cases - 200 (3.1ms)
+[2026-09-29 18:16:09] [INFO] [cs2_simulator:68] GET /api/cases/dreams-nightmares-case - 200 (3.0ms)
+[2026-09-29 18:16:12] [INFO] [cs2_simulator:68] POST /api/cases/dreams-nightmares-case/open - 200 (9.3ms)
+[2026-09-29 18:16:20] [INFO] [cs2_simulator:68] POST /api/cases/dreams-nightmares-case/open - 200 (13.9ms)
+[2026-09-29 18:16:32] [INFO] [cs2_simulator:68] POST /api/cases/dreams-nightmares-case/open - 200 (11.0ms)
+[2026-09-29 18:16:40] [INFO] [cs2_simulator:68] POST /api/cases/dreams-nightmares-case/open - 200 (13.0ms)
+[2026-09-29 18:16:45] [INFO] [cs2_simulator:68] GET /api/admin/overview - 403 (4.4ms)
+[2026-09-29 18:16:55] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.0ms)
+[2026-09-29 18:16:56] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.0ms)
+[2026-09-29 18:17:01] [INFO] [cs2_simulator:68] POST /api/auth/admin-login - 200 (3.4ms)
+[2026-09-29 18:17:01] [INFO] [cs2_simulator:68] GET /api/admin/overview - 200 (5.4ms)
+[2026-09-29 18:17:01] [INFO] [cs2_simulator:68] GET /api/admin/logs - 200 (19.6ms)
+[2026-09-29 18:17:05] [INFO] [cs2_simulator:68] POST /api/auth/admin-login - 200 (2.4ms)
+[2026-09-29 18:17:05] [INFO] [cs2_simulator:68] GET /api/admin/overview - 200 (5.5ms)
+[2026-09-29 18:17:05] [INFO] [cs2_simulator:68] GET /api/admin/logs - 200 (13.4ms)
+[2026-09-29 18:17:15] [INFO] [cs2_simulator:68] GET /api/cases/revolution-case - 200 (4.1ms)
+[2026-09-29 18:17:19] [INFO] [cs2_simulator:68] POST /api/cases/revolution-case/open - 200 (12.6ms)
+[2026-09-29 18:17:22] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (7.5ms)
+[2026-09-29 18:17:25] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (6.5ms)
+[2026-09-29 18:17:26] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.4ms)
+[2026-09-29 18:17:30] [INFO] [cs2_simulator:68] POST /api/inventory/sell-all - 200 (9.9ms)
+[2026-09-29 18:17:30] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (6.2ms)
+[2026-09-29 18:17:53] [INFO] [cs2_simulator:68] GET /api/docs - 200 (0.4ms)
+[2026-09-29 18:31:42] [INFO] [cs2_simulator:68] GET /api/cases - 200 (3.6ms)
+[2026-09-29 18:32:30] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 404: Case not found
+[2026-09-29 18:32:30] [INFO] [cs2_simulator:68] GET /api/cases/kilowatt-case - 404 (2.5ms)
+[2026-09-29 18:32:52] [INFO] [cs2_simulator:68] GET /api/cases - 200 (2.6ms)
+[2026-09-29 18:33:12] [INFO] [cs2_simulator:68] GET /api/cases/crate-4904 - 200 (3.3ms)
+[2026-09-29 18:33:24] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (2.4ms)
+[2026-09-29 18:33:24] [INFO] [cs2_simulator:68] POST /api/cases/crate-4904/open - 200 (7.9ms)
+[2026-09-29 18:34:14] [INFO] [cs2_simulator:68] GET /api/auth/me - 200 (10.4ms)
+[2026-09-29 18:34:14] [INFO] [cs2_simulator:68] GET /api/cases - 200 (3.2ms)
+[2026-09-29 18:34:21] [INFO] [cs2_simulator:68] GET /api/cases/crate-4747 - 200 (3.1ms)
+[2026-09-29 18:34:27] [INFO] [cs2_simulator:68] POST /api/cases/crate-4747/open - 200 (8.0ms)
+[2026-09-29 18:34:35] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.2ms)
+[2026-09-29 18:34:40] [INFO] [cs2_simulator:68] POST /api/inventory/sell-all - 200 (7.4ms)
+[2026-09-29 18:34:40] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.2ms)
+[2026-09-29 18:34:54] [INFO] [cs2_simulator:68] GET /api/cases/crate-4747 - 200 (2.9ms)
+[2026-09-29 18:40:10] [INFO] [cs2_simulator:68] GET /api/health - 200 (2.9ms)
+[2026-09-29 18:40:19] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (2.2ms)
+[2026-09-29 18:40:19] [INFO] [cs2_simulator:68] POST /api/cases/crate-4904/open - 200 (7.4ms)
+[2026-09-29 18:40:19] [INFO] [cs2_simulator:68] POST /api/cases/crate-4904/open - 200 (9.7ms)
+[2026-09-29 18:40:25] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (3.2ms)
+[2026-09-29 18:40:25] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.5ms)
+[2026-09-29 18:40:25] [INFO] [cs2_simulator:68] POST /api/inventory/29/sell - 200 (7.3ms)
+[2026-09-29 18:42:33] [INFO] [cs2_simulator:68] GET /api/auth/me - 200 (5.5ms)
+[2026-09-29 18:42:33] [INFO] [cs2_simulator:68] GET /api/cases - 200 (3.5ms)
+[2026-09-29 18:42:39] [INFO] [cs2_simulator:68] GET /api/cases/crate-4698 - 200 (3.6ms)
+[2026-09-29 18:42:42] [INFO] [cs2_simulator:68] POST /api/cases/crate-4698/open - 200 (7.7ms)
+[2026-09-29 18:42:51] [INFO] [cs2_simulator:68] POST /api/inventory/36/sell - 200 (9.0ms)
+[2026-09-29 18:42:51] [INFO] [cs2_simulator:68] POST /api/inventory/37/sell - 200 (8.2ms)
+[2026-09-29 18:42:51] [INFO] [cs2_simulator:68] POST /api/inventory/38/sell - 200 (8.5ms)
+[2026-09-29 18:42:51] [INFO] [cs2_simulator:68] POST /api/inventory/39/sell - 200 (8.0ms)
+[2026-09-29 18:42:51] [INFO] [cs2_simulator:68] POST /api/inventory/40/sell - 200 (7.4ms)
+[2026-09-29 18:43:05] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.0ms)
+[2026-09-29 18:43:05] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.2ms)
+[2026-09-29 18:43:08] [INFO] [cs2_simulator:68] GET /api/cases/crate-4747 - 200 (3.1ms)
+[2026-09-29 18:43:10] [INFO] [cs2_simulator:68] POST /api/cases/crate-4747/open - 200 (8.2ms)
+[2026-09-29 18:43:27] [INFO] [cs2_simulator:68] POST /api/cases/crate-4747/open - 200 (9.1ms)
+[2026-09-29 18:43:35] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.0ms)
+[2026-09-29 18:43:36] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.5ms)
+[2026-09-29 18:43:42] [INFO] [cs2_simulator:68] POST /api/tradeup - 200 (8.2ms)
+[2026-09-29 18:43:42] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.6ms)
+[2026-09-29 18:43:51] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.5ms)
+[2026-09-29 18:43:54] [INFO] [cs2_simulator:68] POST /api/inventory/sell-all - 200 (7.6ms)
+[2026-09-29 18:43:54] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (5.1ms)
+[2026-09-29 18:45:03] [INFO] [cs2_simulator:68] POST /api/wallet/deposit - 200 (7.4ms)
+[2026-09-29 18:45:19] [INFO] [cs2_simulator:68] GET /api/cases/crate-4698 - 200 (4.0ms)
+[2026-09-29 18:45:24] [INFO] [cs2_simulator:68] GET /api/cases/crate-4001 - 200 (3.1ms)
+[2026-09-29 18:46:20] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.3ms)
+[2026-09-29 18:46:21] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.1ms)
+[2026-09-29 18:46:21] [INFO] [cs2_simulator:68] GET /api/admin/overview - 200 (4.0ms)
+[2026-09-29 18:46:21] [INFO] [cs2_simulator:68] GET /api/admin/logs - 200 (11.9ms)
+[2026-09-29 18:46:38] [INFO] [cs2_simulator:68] POST /api/cases/verify-roll - 200 (1.8ms)
+[2026-09-29 18:46:45] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.2ms)
+[2026-09-29 18:46:46] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.4ms)
+[2026-09-29 18:46:47] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.8ms)
+[2026-09-29 18:46:48] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.0ms)
+[2026-09-29 18:46:49] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (3.8ms)
+[2026-09-29 18:46:49] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (3.8ms)
+[2026-09-29 18:46:49] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (3.8ms)
+[2026-09-29 18:46:50] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (4.1ms)
+[2026-09-29 18:46:50] [INFO] [cs2_simulator:68] GET /api/inventory - 200 (3.8ms)
+[2026-09-29 18:47:05] [INFO] [cs2_simulator:68] GET /api/cases/crate-4818 - 200 (2.9ms)
+[2026-09-29 18:49:36] [INFO] [cs2_simulator:68] GET /api/cases - 200 (4.4ms)
+[2026-09-29 18:54:39] [INFO] [cs2_simulator:68] GET /api/auth/me - 200 (5.6ms)
+[2026-09-29 18:54:39] [INFO] [cs2_simulator:68] GET /api/cases - 200 (5.8ms)
+[2026-09-29 18:55:12] [INFO] [cs2_simulator:68] GET /api/cases/crate-4005 - 200 (2.9ms)
+[2026-09-29 18:56:29] [INFO] [cs2_simulator:68] GET /api/cases/crate-4001 - 200 (2.7ms)
+[2026-09-29 18:59:54] [INFO] [cs2_simulator:68] POST /api/auth/demo-login - 200 (2.4ms)
+[2026-09-29 19:07:29] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:07:29] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 'Settings' object has no attribute 'ADMIN_PASSWORD'
+[2026-09-29 19:07:53] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:07:53] [INFO] [cs2_simulator:220] Admin user credentials verified for: admin
+[2026-09-29 19:07:53] [INFO] [cs2_simulator:222] Database schema initialized successfully.
+[2026-09-29 19:14:28] [INFO] [cs2_simulator:68] GET /api/cases - 200 (4.1ms)
+[2026-09-29 19:14:36] [INFO] [cs2_simulator:68] POST /api/auth/register - 200 (27.0ms)
+[2026-09-29 19:15:27] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 19:15:27] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:15:27] [INFO] [cs2_simulator:220] Admin user credentials verified for: admin
+[2026-09-29 19:15:27] [INFO] [cs2_simulator:222] Database schema initialized successfully.
+[2026-09-29 19:15:27] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 19:15:51] [INFO] [cs2_simulator:70] POST /api/auth/register - 400 (4.3ms)
+[2026-09-29 19:16:00] [INFO] [cs2_simulator:70] POST /api/auth/register - 400 (0.9ms)
+[2026-09-29 19:16:00] [INFO] [cs2_simulator:70] POST /api/auth/register - 200 (26.1ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (26.9ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (26.7ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/auth/forgot-password - 200 (27.9ms)
+[2026-09-29 19:16:01] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 401: Sai tên đăng nhập hoặc mật khẩu
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/auth/login - 401 (83.9ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (23.4ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (12.7ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (7.5ms)
+[2026-09-29 19:16:01] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 400: Bạn đã điểm danh hôm nay rồi! Vui lòng quay lại sau 11 giờ.
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] POST /api/daily/claim - 400 (35.7ms)
+[2026-09-29 19:16:01] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (6.3ms)
+[2026-09-29 19:17:10] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (7.0ms)
+[2026-09-29 19:17:10] [INFO] [cs2_simulator:70] GET /api/cases - 200 (14.0ms)
+[2026-09-29 19:17:10] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (15.6ms)
+[2026-09-29 19:17:14] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.4ms)
+[2026-09-29 19:17:18] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (7.7ms)
+[2026-09-29 19:17:18] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (10.8ms)
+[2026-09-29 19:17:18] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.0ms)
+[2026-09-29 19:17:28] [INFO] [cs2_simulator:70] POST /api/auth/demo-login - 200 (3.2ms)
+[2026-09-29 19:17:28] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.7ms)
+[2026-09-29 19:17:33] [INFO] [cs2_simulator:70] POST /api/wallet/deposit - 200 (7.7ms)
+[2026-09-29 19:17:55] [INFO] [cs2_simulator:70] GET /api/cases/crate-4001 - 200 (4.6ms)
+[2026-09-29 19:18:00] [INFO] [cs2_simulator:70] GET /api/cases/crate-4669 - 200 (3.7ms)
+[2026-09-29 19:18:09] [INFO] [cs2_simulator:70] GET /api/cases/crate-4002 - 200 (3.1ms)
+[2026-09-29 19:34:31] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:34:31] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-29 19:34:31] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-29 19:34:55] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 19:34:55] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:34:55] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-29 19:34:55] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-29 19:34:55] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'Admin@123456')
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (30.0ms)
+[2026-09-29 19:35:37] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 401: Sai tên đăng nhập hoặc mật khẩu
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/auth/login - 401 (33.7ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/auth/demo-login - 404 (10.2ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] GET /api/cases - 200 (6.5ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (6.4ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:64] Generated new hourly 6-digit code: 685123, valid until 2026-09-29 13:35:37
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (11.1ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/auth/register - 200 (38.6ms)
+[2026-09-29 19:35:37] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 400: Mã code không chính xác hoặc đã hết hiệu lực. Mỗi mã chỉ có hiệu lực trong 1 tiếng!
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 400 (11.2ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (8.3ms)
+[2026-09-29 19:35:37] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 400: Bạn đã sử dụng mã code này rồi! Mỗi tài khoản chỉ được nhập 1 lần cho mỗi mã sau 1 tiếng.
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 400 (9.1ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.0ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/auth/register - 200 (29.7ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (8.5ms)
+[2026-09-29 19:35:37] [INFO] [cs2_simulator:70] POST /api/cases/crate-4138/open - 200 (10.5ms)
+[2026-09-29 19:38:35] [INFO] [cs2_simulator:70] GET /api/cases - 200 (5.7ms)
+[2026-09-29 19:38:38] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (2.6ms)
+[2026-09-29 19:39:27] [INFO] [cs2_simulator:70] POST /api/auth/register - 422 (2.9ms)
+[2026-09-29 19:39:29] [INFO] [cs2_simulator:70] POST /api/auth/register - 422 (1.0ms)
+[2026-09-29 19:39:30] [INFO] [cs2_simulator:70] POST /api/auth/register - 422 (1.0ms)
+[2026-09-29 19:39:35] [INFO] [cs2_simulator:70] POST /api/auth/register - 200 (26.6ms)
+[2026-09-29 19:39:35] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.9ms)
+[2026-09-29 19:39:35] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.1ms)
+[2026-09-29 19:39:41] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (9.6ms)
+[2026-09-29 19:39:41] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.0ms)
+[2026-09-29 19:39:41] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.1ms)
+[2026-09-29 19:39:44] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.0ms)
+[2026-09-29 19:39:46] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (8.6ms)
+[2026-09-29 19:39:46] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (7.2ms)
+[2026-09-29 19:40:05] [INFO] [cs2_simulator:70] GET /api/cases/crate-4818 - 200 (3.2ms)
+[2026-09-29 19:40:12] [INFO] [cs2_simulator:70] POST /api/cases/crate-4818/open - 200 (8.8ms)
+[2026-09-29 19:40:21] [INFO] [cs2_simulator:70] POST /api/cases/crate-4818/open - 200 (10.1ms)
+[2026-09-29 19:40:28] [INFO] [cs2_simulator:70] POST /api/cases/crate-4818/open - 200 (9.7ms)
+[2026-09-29 19:40:36] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (6.0ms)
+[2026-09-29 19:40:59] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (3.6ms)
+[2026-09-29 19:41:05] [INFO] [cs2_simulator:70] GET /api/cases/crate-4482 - 200 (3.2ms)
+[2026-09-29 19:41:12] [INFO] [cs2_simulator:70] GET /api/cases/crate-4091 - 200 (3.3ms)
+[2026-09-29 19:41:19] [INFO] [cs2_simulator:70] GET /api/cases/crate-4091 - 200 (3.8ms)
+[2026-09-29 19:41:22] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.1ms)
+[2026-09-29 19:41:34] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.6ms)
+[2026-09-29 19:41:38] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (3.4ms)
+[2026-09-29 19:41:41] [INFO] [cs2_simulator:70] GET /api/cases/crate-4669 - 200 (3.2ms)
+[2026-09-29 19:41:45] [INFO] [cs2_simulator:70] GET /api/cases/crate-4598 - 200 (3.3ms)
+[2026-09-29 19:41:50] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.7ms)
+[2026-09-29 19:41:54] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (3.4ms)
+[2026-09-29 19:41:58] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.0ms)
+[2026-09-29 19:42:05] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.3ms)
+[2026-09-29 19:42:11] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (3.0ms)
+[2026-09-29 19:42:15] [INFO] [cs2_simulator:70] POST /api/cases/crate-4138/open - 200 (10.2ms)
+[2026-09-29 19:42:27] [INFO] [cs2_simulator:70] POST /api/cases/crate-4138/open - 200 (9.3ms)
+[2026-09-29 19:42:35] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (8.7ms)
+[2026-09-29 19:42:40] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.8ms)
+[2026-09-29 19:42:48] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.2ms)
+[2026-09-29 19:43:22] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (25.6ms)
+[2026-09-29 19:43:23] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (10.5ms)
+[2026-09-29 19:43:26] [INFO] [cs2_simulator:70] GET /api/admin/overview - 200 (5.4ms)
+[2026-09-29 19:43:26] [INFO] [cs2_simulator:70] GET /api/admin/logs - 200 (13.9ms)
+[2026-09-29 19:43:30] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.5ms)
+[2026-09-29 19:43:33] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.7ms)
+[2026-09-29 19:43:35] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (8.6ms)
+[2026-09-29 19:43:35] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (7.7ms)
+[2026-09-29 19:43:38] [INFO] [cs2_simulator:70] GET /api/docs - 200 (0.5ms)
+[2026-09-29 19:43:40] [INFO] [cs2_simulator:70] GET /metrics - 200 (1.2ms)
+[2026-09-29 19:44:29] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.2ms)
+[2026-09-29 19:44:31] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.7ms)
+[2026-09-29 19:53:39] [INFO] [cs2_simulator:70] GET /api/cases - 200 (3.4ms)
+[2026-09-29 19:53:45] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (25.0ms)
+[2026-09-29 19:53:45] [INFO] [cs2_simulator:70] GET /api/admin/overview - 200 (5.5ms)
+[2026-09-29 19:53:45] [INFO] [cs2_simulator:70] GET /api/admin/users - 200 (4.1ms)
+[2026-09-29 19:53:45] [INFO] [cs2_simulator:70] GET /api/admin/giftcode - 404 (0.4ms)
+[2026-09-29 19:54:10] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 19:54:10] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:54:10] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-29 19:54:10] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-29 19:54:10] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-29 19:54:20] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (28.6ms)
+[2026-09-29 19:54:20] [INFO] [cs2_simulator:70] GET /api/admin/overview - 200 (19.6ms)
+[2026-09-29 19:54:20] [INFO] [cs2_simulator:70] GET /api/admin/users - 200 (5.5ms)
+[2026-09-29 19:54:20] [INFO] [cs2_simulator:70] GET /api/admin/giftcode - 200 (5.2ms)
+[2026-09-29 19:54:20] [INFO] [cs2_simulator:70] GET /api/admin/cases - 200 (7.4ms)
+[2026-09-29 19:54:27] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (28.2ms)
+[2026-09-29 19:54:27] [INFO] [cs2_simulator:70] GET /api/admin/users/1/inventory - 200 (6.7ms)
+[2026-09-29 19:54:27] [ERROR] [cs2_simulator:25] Database transaction rolled back due to error: 404: Không tìm thấy rương
+[2026-09-29 19:54:27] [INFO] [cs2_simulator:70] POST /api/admin/cases/dreams-nightmares - 404 (23.9ms)
+[2026-09-29 19:54:45] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (25.3ms)
+[2026-09-29 19:54:45] [INFO] [cs2_simulator:70] POST /api/admin/cases/crate-4001 - 200 (8.2ms)
+[2026-09-29 19:54:50] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (26.7ms)
+[2026-09-29 19:54:50] [INFO] [cs2_simulator:70] POST /api/admin/cases/crate-4001 - 200 (5.9ms)
+[2026-09-29 19:55:27] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (39.4ms)
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:70] GET /api/cases - 200 (14.2ms)
+[2026-09-29 19:55:28] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (17.1ms)
+[2026-09-29 19:55:29] [INFO] [cs2_simulator:70] GET /api/admin/overview - 200 (8.3ms)
+[2026-09-29 19:55:34] [INFO] [cs2_simulator:70] GET /api/admin/users - 200 (6.1ms)
+[2026-09-29 19:55:45] [INFO] [cs2_simulator:70] GET /api/admin/giftcode - 200 (5.4ms)
+[2026-09-29 19:55:52] [INFO] [cs2_simulator:70] GET /api/admin/cases - 200 (9.8ms)
+[2026-09-29 19:55:54] [INFO] [cs2_simulator:70] GET /api/admin/logs - 200 (11.1ms)
+[2026-09-29 19:55:57] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.4ms)
+[2026-09-29 19:55:58] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (7.8ms)
+[2026-09-29 19:55:58] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.7ms)
+[2026-09-29 19:55:58] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.3ms)
+[2026-09-29 19:55:59] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.4ms)
+[2026-09-29 19:56:00] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.9ms)
+[2026-09-29 19:56:09] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (26.5ms)
+[2026-09-29 19:56:09] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.8ms)
+[2026-09-29 19:56:11] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.7ms)
+[2026-09-29 19:56:16] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.4ms)
+[2026-09-29 19:56:20] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.7ms)
+[2026-09-29 19:57:31] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (28.4ms)
+[2026-09-29 19:57:31] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (6.1ms)
+[2026-09-29 19:57:34] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.7ms)
+[2026-09-29 19:57:35] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.7ms)
+[2026-09-29 19:57:40] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.2ms)
+[2026-09-29 19:58:00] [INFO] [cs2_simulator:70] POST /api/inventory/65/sell - 200 (10.5ms)
+[2026-09-29 19:58:00] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (6.0ms)
+[2026-09-29 19:58:07] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.4ms)
+[2026-09-29 19:58:17] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (4.2ms)
+[2026-09-29 19:58:17] [INFO] [cs2_simulator:70] GET /api/cases - 200 (12.2ms)
+[2026-09-29 19:58:17] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (14.2ms)
+[2026-09-29 19:58:18] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (4.5ms)
+[2026-09-29 19:58:18] [INFO] [cs2_simulator:70] GET /api/cases - 200 (15.2ms)
+[2026-09-29 19:58:18] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (16.8ms)
+[2026-09-29 20:04:19] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-29 20:04:19] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-29 20:04:19] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-29 20:04:19] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-29 20:04:19] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-29 20:04:45] [INFO] [cs2_simulator:70] GET /api/cases - 200 (16.8ms)
+[2026-09-29 20:04:58] [INFO] [cs2_simulator:70] GET /api/cases - 200 (5.9ms)
+[2026-09-29 20:05:00] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.5ms)
+[2026-09-29 20:05:15] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (39.0ms)
+[2026-09-29 20:05:15] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (10.5ms)
+[2026-09-29 20:05:29] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (19.7ms)
+[2026-09-29 20:05:30] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.0ms)
+[2026-09-29 20:05:42] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.0ms)
+[2026-09-29 20:05:48] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.6ms)
+[2026-09-29 20:05:52] [INFO] [cs2_simulator:70] GET /api/cases/crate-4138 - 200 (3.3ms)
+[2026-09-29 20:05:56] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (6.6ms)
+[2026-09-29 20:05:56] [INFO] [cs2_simulator:70] GET /api/cases - 200 (25.8ms)
+[2026-09-29 20:05:56] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (27.9ms)
+[2026-09-29 20:24:10] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (7.2ms)
+[2026-09-29 20:24:10] [INFO] [cs2_simulator:70] GET /api/cases - 200 (25.2ms)
+[2026-09-29 20:24:10] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (30.1ms)
+[2026-09-29 20:24:13] [INFO] [cs2_simulator:70] GET /api/cases/crate-4548 - 200 (3.5ms)
+[2026-09-29 20:24:17] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.8ms)
+[2026-09-29 20:24:43] [INFO] [cs2_simulator:70] GET /api/cases/crate-7007 - 200 (6.0ms)
+[2026-09-29 20:24:50] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.2ms)
+[2026-09-29 20:24:57] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (26.7ms)
+[2026-09-29 20:24:57] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (13.0ms)
+[2026-09-29 20:24:58] [INFO] [cs2_simulator:70] GET /api/cases/crate-4598 - 200 (4.2ms)
+[2026-09-29 20:25:00] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.4ms)
+[2026-09-29 20:25:07] [INFO] [cs2_simulator:70] GET /api/cases/crate-souvenir-cobblestone - 200 (2.6ms)
+[2026-09-29 20:25:19] [INFO] [cs2_simulator:70] GET /api/cases/crate-4352 - 200 (3.0ms)
+[2026-09-29 20:25:28] [INFO] [cs2_simulator:70] GET /api/cases/crate-4001 - 200 (2.9ms)
+[2026-09-29 20:25:45] [INFO] [cs2_simulator:70] GET /api/cases/crate-4009 - 200 (3.0ms)
+[2026-09-29 20:25:59] [INFO] [cs2_simulator:70] GET /api/cases/crate-4009 - 200 (3.1ms)
+[2026-09-29 20:26:13] [INFO] [cs2_simulator:70] GET /api/cases/crate-4005 - 200 (3.1ms)
+[2026-09-29 20:26:22] [INFO] [cs2_simulator:70] GET /api/cases/crate-4818 - 200 (4.5ms)
+[2026-09-29 20:26:25] [INFO] [cs2_simulator:70] GET /api/cases/crate-4281 - 200 (3.0ms)
+[2026-09-29 20:26:29] [INFO] [cs2_simulator:70] GET /api/cases/crate-4904 - 200 (3.2ms)
+[2026-09-29 20:26:32] [INFO] [cs2_simulator:70] GET /api/cases/crate-4351 - 200 (3.1ms)
+[2026-09-29 20:26:34] [INFO] [cs2_simulator:70] GET /api/cases/crate-4029 - 200 (3.4ms)
+[2026-09-29 20:26:39] [INFO] [cs2_simulator:70] GET /api/cases/crate-4061 - 200 (3.0ms)
+[2026-09-29 20:26:42] [INFO] [cs2_simulator:70] GET /api/cases/crate-4620 - 200 (3.4ms)
+[2026-09-29 20:26:44] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (4.3ms)
+[2026-09-29 20:26:50] [INFO] [cs2_simulator:70] GET /api/cases/crate-4598 - 200 (2.9ms)
+[2026-09-29 20:26:53] [INFO] [cs2_simulator:70] GET /api/cases/crate-7007 - 200 (3.3ms)
+[2026-09-29 20:26:55] [INFO] [cs2_simulator:70] GET /api/cases/crate-4747 - 200 (6.0ms)
+[2026-09-29 20:26:56] [INFO] [cs2_simulator:70] GET /api/cases/crate-7003 - 200 (3.6ms)
+[2026-09-29 20:26:58] [INFO] [cs2_simulator:70] GET /api/cases/crate-4695 - 200 (4.9ms)
+[2026-09-29 20:27:00] [INFO] [cs2_simulator:70] GET /api/cases/crate-4846 - 200 (4.1ms)
+[2026-09-29 20:27:01] [INFO] [cs2_simulator:70] GET /api/cases/crate-4880 - 200 (3.5ms)
+[2026-09-29 20:27:03] [INFO] [cs2_simulator:70] GET /api/cases/crate-4698 - 200 (3.3ms)
+[2026-09-29 20:27:05] [INFO] [cs2_simulator:70] GET /api/cases/crate-4403 - 200 (3.0ms)
+[2026-09-29 20:27:07] [INFO] [cs2_simulator:70] GET /api/cases/crate-4233 - 200 (3.3ms)
+[2026-09-29 20:27:10] [INFO] [cs2_simulator:70] GET /api/cases/crate-4818 - 200 (3.4ms)
+[2026-09-29 20:27:11] [INFO] [cs2_simulator:70] GET /api/cases/crate-4281 - 200 (3.3ms)
+[2026-09-29 20:27:13] [INFO] [cs2_simulator:70] GET /api/cases/crate-4089 - 200 (2.9ms)
+[2026-09-29 20:27:14] [INFO] [cs2_simulator:70] GET /api/cases/crate-4904 - 200 (6.0ms)
+[2026-09-29 20:27:16] [INFO] [cs2_simulator:70] GET /api/cases/crate-4236 - 200 (3.2ms)
+[2026-09-29 20:27:18] [INFO] [cs2_simulator:70] GET /api/cases/crate-souvenir-anubis - 200 (2.5ms)
+[2026-09-29 20:27:21] [INFO] [cs2_simulator:70] GET /api/cases/crate-4061 - 200 (2.8ms)
+[2026-09-29 20:27:24] [INFO] [cs2_simulator:70] GET /api/cases/crate-souvenir-dust2 - 200 (2.6ms)
+[2026-09-29 20:27:29] [INFO] [cs2_simulator:70] GET /api/cases/crate-4004 - 200 (3.3ms)
+[2026-09-29 20:27:32] [INFO] [cs2_simulator:70] GET /api/cases/crate-4017 - 200 (5.6ms)
+[2026-09-29 20:27:37] [INFO] [cs2_simulator:70] GET /api/cases/crate-4482 - 200 (3.4ms)
+[2026-09-29 20:27:42] [INFO] [cs2_simulator:70] GET /api/cases/crate-4880 - 200 (3.4ms)
+[2026-09-29 20:27:51] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (10.2ms)
+[2026-09-29 20:27:53] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (13.9ms)
+[2026-09-29 20:27:54] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (16.2ms)
+[2026-09-29 20:27:56] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (12.4ms)
+[2026-09-29 20:27:59] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.9ms)
+[2026-09-29 20:28:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (12.8ms)
+[2026-09-29 20:28:02] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.6ms)
+[2026-09-29 20:28:04] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (14.6ms)
+[2026-09-29 20:28:05] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (12.9ms)
+[2026-09-29 20:28:06] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (11.9ms)
+[2026-09-29 20:28:08] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.7ms)
+[2026-09-29 20:28:09] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (13.4ms)
+[2026-09-29 20:28:10] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.3ms)
+[2026-09-29 20:28:15] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.6ms)
+[2026-09-29 20:28:16] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (11.7ms)
+[2026-09-29 20:28:18] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (11.9ms)
+[2026-09-29 20:28:19] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (14.3ms)
+[2026-09-29 20:28:20] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (11.7ms)
+[2026-09-29 20:28:21] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.2ms)
+[2026-09-29 20:28:23] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (12.2ms)
+[2026-09-29 20:28:24] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (10.7ms)
+[2026-09-29 20:28:25] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (13.7ms)
+[2026-09-29 20:28:26] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (12.0ms)
+[2026-09-29 20:28:28] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.5ms)
+[2026-09-29 20:28:29] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (13.2ms)
+[2026-09-29 20:28:30] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.2ms)
+[2026-09-29 20:28:33] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.7ms)
+[2026-09-29 20:28:34] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.3ms)
+[2026-09-29 20:28:35] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.3ms)
+[2026-09-29 20:28:36] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 200 (9.4ms)
+[2026-09-29 20:28:38] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (4.3ms)
+[2026-09-29 20:28:39] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (3.2ms)
+[2026-09-29 20:28:39] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (3.2ms)
+[2026-09-29 20:28:40] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (3.4ms)
+[2026-09-29 20:28:40] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (3.7ms)
+[2026-09-29 20:28:41] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (3.3ms)
+[2026-09-29 20:28:41] [INFO] [cs2_simulator:70] POST /api/cases/crate-4880/open - 429 (2.9ms)
+[2026-09-29 20:28:54] [INFO] [cs2_simulator:70] GET /api/cases/crate-souvenir-cobblestone - 200 (2.6ms)
+[2026-09-29 20:28:59] [INFO] [cs2_simulator:70] GET /api/cases/crate-4003 - 200 (3.2ms)
+[2026-09-29 20:29:09] [INFO] [cs2_simulator:70] GET /api/cases/crate-4352 - 200 (3.1ms)
+[2026-09-29 20:29:21] [INFO] [cs2_simulator:70] GET /api/cases/crate-4002 - 200 (2.8ms)
+[2026-09-29 20:29:29] [INFO] [cs2_simulator:70] GET /api/cases/crate-4717 - 200 (3.1ms)
+[2026-09-29 20:29:33] [INFO] [cs2_simulator:70] GET /api/cases/crate-4471 - 200 (3.4ms)
+[2026-09-29 20:29:38] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (8.3ms)
+[2026-09-29 20:29:42] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.9ms)
+[2026-09-29 20:29:43] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.3ms)
+[2026-09-29 20:29:44] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (11.9ms)
+[2026-09-29 20:29:45] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.6ms)
+[2026-09-29 20:29:47] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (11.8ms)
+[2026-09-29 20:29:49] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.0ms)
+[2026-09-29 20:29:50] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (11.8ms)
+[2026-09-29 20:29:51] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.8ms)
+[2026-09-29 20:29:52] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.3ms)
+[2026-09-29 20:29:53] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.2ms)
+[2026-09-29 20:29:54] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.9ms)
+[2026-09-29 20:29:56] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.8ms)
+[2026-09-29 20:29:57] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.4ms)
+[2026-09-29 20:29:58] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.4ms)
+[2026-09-29 20:29:59] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.5ms)
+[2026-09-29 20:30:00] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (10.5ms)
+[2026-09-29 20:30:02] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (10.1ms)
+[2026-09-29 20:30:07] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (10.0ms)
+[2026-09-29 20:30:08] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (10.0ms)
+[2026-09-29 20:30:09] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.6ms)
+[2026-09-29 20:30:11] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.6ms)
+[2026-09-29 20:30:12] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.7ms)
+[2026-09-29 20:30:13] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.7ms)
+[2026-09-29 20:30:15] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.5ms)
+[2026-09-29 20:30:16] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.4ms)
+[2026-09-29 20:30:17] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.0ms)
+[2026-09-29 20:30:19] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.1ms)
+[2026-09-29 20:30:20] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (12.2ms)
+[2026-09-29 20:30:22] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 200 (9.6ms)
+[2026-09-29 20:30:23] [INFO] [cs2_simulator:70] POST /api/cases/crate-4471/open - 429 (4.1ms)
+[2026-09-29 20:30:26] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (4.4ms)
+[2026-09-29 20:30:26] [INFO] [cs2_simulator:70] GET /api/cases - 200 (5.1ms)
+[2026-09-29 20:30:26] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (16.9ms)
+[2026-09-29 20:30:30] [INFO] [cs2_simulator:70] GET /api/cases/crate-4288 - 200 (3.1ms)
+[2026-09-29 20:30:38] [INFO] [cs2_simulator:70] GET /api/cases/crate-4002 - 200 (3.1ms)
+[2026-09-29 20:30:42] [INFO] [cs2_simulator:70] GET /api/cases/crate-4017 - 200 (3.1ms)
+[2026-09-29 20:30:45] [INFO] [cs2_simulator:70] GET /api/cases/crate-4009 - 200 (3.5ms)
+[2026-09-29 20:30:47] [INFO] [cs2_simulator:70] GET /api/cases/crate-4004 - 200 (3.1ms)
+[2026-09-29 20:30:49] [INFO] [cs2_simulator:70] GET /api/cases/crate-4005 - 200 (2.9ms)
+[2026-09-29 20:30:52] [INFO] [cs2_simulator:70] GET /api/cases/crate-4019 - 200 (3.2ms)
+[2026-09-29 20:30:54] [INFO] [cs2_simulator:70] GET /api/cases/crate-4003 - 200 (3.5ms)
+[2026-09-29 20:30:55] [INFO] [cs2_simulator:70] GET /api/cases/crate-4352 - 200 (3.6ms)
+[2026-09-29 20:31:05] [INFO] [cs2_simulator:70] GET /api/cases/crate-4011 - 200 (3.1ms)
+[2026-09-29 20:31:09] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (8.6ms)
+[2026-09-29 20:31:17] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.5ms)
+[2026-09-29 20:31:18] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.4ms)
+[2026-09-29 20:31:19] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:21] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.0ms)
+[2026-09-29 20:31:22] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.0ms)
+[2026-09-29 20:31:23] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.4ms)
+[2026-09-29 20:31:25] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.8ms)
+[2026-09-29 20:31:26] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:27] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.4ms)
+[2026-09-29 20:31:29] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (8.8ms)
+[2026-09-29 20:31:30] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.6ms)
+[2026-09-29 20:31:32] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (10.2ms)
+[2026-09-29 20:31:33] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.1ms)
+[2026-09-29 20:31:34] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.6ms)
+[2026-09-29 20:31:35] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:36] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:38] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.6ms)
+[2026-09-29 20:31:39] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.1ms)
+[2026-09-29 20:31:40] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (10.1ms)
+[2026-09-29 20:31:42] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:43] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.7ms)
+[2026-09-29 20:31:44] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (8.9ms)
+[2026-09-29 20:31:46] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (8.8ms)
+[2026-09-29 20:31:47] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.7ms)
+[2026-09-29 20:31:48] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.1ms)
+[2026-09-29 20:31:53] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.2ms)
+[2026-09-29 20:31:54] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.3ms)
+[2026-09-29 20:31:55] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (8.9ms)
+[2026-09-29 20:31:56] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (12.6ms)
+[2026-09-29 20:31:58] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 200 (9.1ms)
+[2026-09-29 20:31:59] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (4.1ms)
+[2026-09-29 20:32:00] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.7ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.5ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.5ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.4ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.5ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (4.5ms)
+[2026-09-29 20:32:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.5ms)
+[2026-09-29 20:32:02] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (3.1ms)
+[2026-09-29 20:32:02] [INFO] [cs2_simulator:70] POST /api/cases/crate-4011/open - 429 (2.9ms)
+[2026-09-29 20:32:20] [INFO] [cs2_simulator:70] GET /api/cases/crate-souvenir-dust2 - 200 (2.4ms)
+[2026-09-29 20:34:28] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (5.4ms)
+[2026-09-29 20:34:28] [INFO] [cs2_simulator:70] GET /api/cases - 200 (14.1ms)
+[2026-09-29 20:34:28] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (16.5ms)
+[2026-09-29 20:39:41] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 08:10:01] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:10:01] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:10:01] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:10:01] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:10:01] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:12:02] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 08:12:03] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:12:03] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:12:03] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:12:03] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:12:03] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:30:23] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:30:23] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:30:23] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:30:23] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:30:23] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:32:06] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 08:32:07] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:32:07] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:32:07] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:32:07] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:32:07] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:49:49] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:49:49] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:49:49] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:49:49] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:49:49] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:50:39] [INFO] [cs2_simulator:70] GET /api/cases - 200 (16.6ms)
+[2026-09-30 08:50:45] [INFO] [cs2_simulator:70] GET /api/cases - 200 (4.1ms)
+[2026-09-30 08:50:54] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 08:50:55] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:50:55] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:50:55] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:50:55] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:50:55] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 08:56:25] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 08:56:25] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 08:56:26] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 08:56:26] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 08:56:26] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 09:01:56] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 09:02:07] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-09-30 09:03:03] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (10.0ms)
+[2026-09-30 09:03:03] [INFO] [cs2_simulator:70] GET /api/cases - 200 (16.4ms)
+[2026-09-30 09:03:03] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (19.1ms)
+[2026-09-30 09:03:11] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (4.9ms)
+[2026-09-30 09:03:12] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (8.6ms)
+[2026-09-30 09:03:12] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.3ms)
+[2026-09-30 09:03:12] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.6ms)
+[2026-09-30 09:03:19] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (28.6ms)
+[2026-09-30 09:03:22] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (18.2ms)
+[2026-09-30 09:04:25] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (20.4ms)
+[2026-09-30 09:04:34] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (18.1ms)
