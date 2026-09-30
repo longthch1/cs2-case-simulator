@@ -40,3 +40,20 @@ logs/*.log
 # OS files
 .DS_Store
 Thumbs.db
+
+# PHP / production secrets
+.env
+.env.*
+!.env.example
+/vendor/
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+/logs/*.log
+/storage/*
+/var/
+
+# PHP runtime
+*.php~
