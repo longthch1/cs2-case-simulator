@@ -385,7 +385,7 @@ class CS2App {
 
         try {
             const res = await fetch(`${API_BASE}/api/daily/status`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -417,7 +417,7 @@ class CS2App {
 
         try {
             const res = await fetch(`${API_BASE}/api/daily/status`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (!res.ok) {
                 this.notify("Không thể tải thông tin quà đăng nhập", "error");
@@ -520,7 +520,7 @@ class CS2App {
         try {
             const res = await fetch(`${API_BASE}/api/daily/claim`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -866,7 +866,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({ count: this.openCount })
             });
@@ -1136,7 +1135,7 @@ class CS2App {
         try {
             const res = await fetch(`${API_BASE}/api/inventory/${id}/sell`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -1233,7 +1232,7 @@ class CS2App {
 
             const res = await fetch(`${API_BASE}/api/inventory/${inventoryId}/sell`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -1294,7 +1293,7 @@ class CS2App {
             try {
                 const res = await fetch(`${API_BASE}/api/inventory/${item.inventory_id}/sell`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${this.token}` }
+                    headers: { }
                 });
                 if (res.ok) {
                     const data = await res.json();
@@ -1347,7 +1346,7 @@ class CS2App {
             }
 
             const res = await fetch(url, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -1438,7 +1437,7 @@ class CS2App {
         try {
             const res = await fetch(`${API_BASE}/api/inventory/${id}/sell`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -1458,7 +1457,7 @@ class CS2App {
         try {
             const res = await fetch(`${API_BASE}/api/inventory/sell-all`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -1620,7 +1619,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({ inventory_ids: this.tradeUpSelected.map(i => i.id) })
             });
@@ -1914,7 +1912,7 @@ class CS2App {
         if (!this.currentUser) return;
         try {
             const res = await fetch(`${API_BASE}/api/admin/overview`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -2005,7 +2003,7 @@ class CS2App {
             if (role) url += `&role=${encodeURIComponent(role)}`;
 
             const res = await fetch(url, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -2128,7 +2126,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({
                     amount: amount,
@@ -2169,7 +2166,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({ role: newRole })
             });
@@ -2200,7 +2196,7 @@ class CS2App {
 
         try {
             const res = await fetch(`${API_BASE}/api/admin/users/${userId}/inventory`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -2257,7 +2253,7 @@ class CS2App {
         if (!this.currentUser) return;
         try {
             const res = await fetch(`${API_BASE}/api/admin/giftcode`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -2313,7 +2309,7 @@ class CS2App {
         try {
             const res = await fetch(`${API_BASE}/api/admin/giftcode/generate`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             const data = await res.json();
             if (res.ok) {
@@ -2345,7 +2341,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({ reward_amount: amount })
             });
@@ -2370,7 +2365,7 @@ class CS2App {
 
         try {
             const res = await fetch(`${API_BASE}/api/admin/cases`, {
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { }
             });
             if (res.ok) {
                 const data = await res.json();
@@ -2452,7 +2447,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({
                     price: price,
@@ -2489,7 +2483,7 @@ class CS2App {
 
             try {
                 const res = await fetch(`${API_BASE}/api/admin/audit?limit=${lines}`, {
-                    headers: { 'Authorization': `Bearer ${this.token}` }
+                    headers: { }
                 });
                 if (res.ok) {
                     const data = await res.json();
@@ -2523,7 +2517,7 @@ class CS2App {
 
                 try {
                     const res = await fetch(`${API_BASE}/api/admin/logs?log_type=${logType}&lines=${lines}`, {
-                        headers: { 'Authorization': `Bearer ${this.token}` }
+                        headers: { }
                     });
                     if (res.ok) {
                         const data = await res.json();
@@ -2652,7 +2646,6 @@ class CS2App {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
                 },
                 body: JSON.stringify({ code })
             });
