@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(32) NOT NULL,
     email VARCHAR(120) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    legacy_password_hash VARCHAR(128) NULL,
+    legacy_salt CHAR(64) NULL,
     role ENUM('user','admin') NOT NULL DEFAULT 'user',
     balance DECIMAL(12,2) NOT NULL DEFAULT 0.00,
     daily_streak INT NOT NULL DEFAULT 0,
