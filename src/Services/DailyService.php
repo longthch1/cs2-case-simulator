@@ -33,7 +33,7 @@ final class DailyService
         }
     }
 
-    private static function status(array $user): array
+    private static function calculateStatus(array $user): array
     {
         $streak = (int)($user['daily_streak'] ?? 0);
         $last = self::parse((string)($user['last_daily_claim'] ?? ''));
@@ -67,7 +67,7 @@ final class DailyService
         $stmt->execute([$user['id']]);
         $dbUser = $stmt->fetch();
 
-        $info = self::status($dbUser ?: $user);
+        $info = self::calculateStatus($dbUser ?: $user);
         $schedule = [];
         for ($d=1; $d<=7; $d++) {
             $claimed = !$info['can_claim'] ? $d <= $info['current_streak'] : $d < $info['next_day'];
@@ -99,7 +99,7 @@ final class DailyService
             $dbUser = $stmt->fetch();
             if (!$dbUser) Response::error('Không tìm thấy người dùng', 404);
 
-            $info = self::status($dbUser);
+            $info = self::calculateStatus($dbUser);
             if (!$info['can_claim']) {
                 Response::error("Bạn đã điểm danh hôm nay rồi! Vui lòng quay lại sau {$info['hours_left']} giờ.", 400);
             }
