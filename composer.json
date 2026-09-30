@@ -1,0 +1,13 @@
+{
+  "name": "longthch1/cs2-case-simulator",
+  "description": "CS2 Case Opening Simulator - PHP/MySQL/Apache edition",
+  "type": "project",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "CS2\\": "src/"
+    }
+  }
+}
