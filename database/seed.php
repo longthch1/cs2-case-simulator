@@ -101,7 +101,9 @@ Database::transaction(function($pdo) use ($data, &$caseCount, &$itemCount, &$uni
                 (float)($item['basePrice'] ?? 0),
                 (float)($item['minFloat'] ?? 0),
                 (float)($item['maxFloat'] ?? 1),
-                !empty($item['canBeStatTrak']) ? 1 : 0
+                // The original Python seed explicitly stored can_be_stattrak=1
+                // for every preset item; keep that behavior for the full catalog.
+                1
             ]);
 
             $itemCount++;
