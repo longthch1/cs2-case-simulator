@@ -97,6 +97,11 @@ final class InventoryService
             ');
             $tx->execute([$user['id'], $amount, $newBalance, sprintf('Sold %s for $%.2f', $item['name'], $amount)]);
 
+            Logger::audit(sprintf(
+                'USER_SELL user=%s id=%d inventory=%d item=%s amount=%.2f ip=%s',
+                $user['username'], $user['id'], $inventoryId, $item['name'], $amount, Request::clientIp()
+            ));
+
             return ['success' => true, 'sold_item_id' => $inventoryId, 'amount' => $amount, 'new_balance' => $newBalance];
         });
     }
@@ -128,6 +133,11 @@ final class InventoryService
                 VALUES (?, "skin_sell", ?, ?, ?)
             ');
             $tx->execute([$user['id'], $total, $newBalance, sprintf('Sold all %d inventory items', count($items))]);
+
+            Logger::audit(sprintf(
+                'USER_SELL_ALL user=%s id=%d count=%d amount=%.2f ip=%s',
+                $user['username'], $user['id'], count($items), $total, Request::clientIp()
+            ));
 
             return ['success' => true, 'sold_count' => count($items), 'amount' => $total, 'new_balance' => $newBalance];
         });
