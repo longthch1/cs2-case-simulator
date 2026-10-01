@@ -5,6 +5,7 @@ namespace CS2\Services;
 
 use CS2\Config\Config;
 use CS2\Database\Database;
+use CS2\Utils\Logger;
 use PDO;
 
 final class MetricsService
@@ -102,7 +103,10 @@ final class MetricsService
                     (method, path, status_code, duration_ms, created_at)
                 VALUES (?, ?, ?, ?, UTC_TIMESTAMP())
             ');
-            $stmt->execute([$method, $path, $status, round($duration, 2)]);
+            $durationRounded = round($duration, 2);
+            $stmt->execute([$method, $path, $status, $durationRounded]);
+            // Match the original FastAPI middleware's request logging.
+            Logger::info(sprintf('%s %s - %d (%.1fms)', $method, $path, $status, $duration));
         } catch (\Throwable $e) {
             // Telemetry must never turn a successful application request into an error.
         }
