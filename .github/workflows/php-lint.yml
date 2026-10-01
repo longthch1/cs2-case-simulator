@@ -23,3 +23,6 @@ jobs:
 
       - name: Run Provably Fair tests
         run: php tests/provably_fair.php
+
+      - name: Full catalog parity test
+        run: php tests/catalog_parity.php
