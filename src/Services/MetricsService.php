@@ -30,9 +30,15 @@ final class MetricsService
 
         $uptime = max(0, time() - $started);
         $cpuLoad = function_exists('sys_getloadavg') ? (float)(sys_getloadavg()[0] ?? 0.0) : 0.0;
-        $memoryMb = function_exists('memory_get_usage')
-            ? round(memory_get_usage(true) / 1048576, 2)
-            : 0.0;
+        $memoryMb = 0.0;
+        // The original Python implementation reported process RSS via psutil.
+        // Read Linux process RSS when available to keep the metric semantics close.
+        $status = @file_get_contents('/proc/self/status');
+        if ($status !== false && preg_match('/^VmRSS:\s+(\\d+)\\s+kB$/m', $status, $m)) {
+            $memoryMb = round(((float)$m[1]) / 1024, 2);
+        } elseif (function_exists('memory_get_usage')) {
+            $memoryMb = round(memory_get_usage(true) / 1048576, 2);
+        }
 
         $pdo = Database::connection();
 
