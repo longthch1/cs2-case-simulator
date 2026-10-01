@@ -13,6 +13,7 @@ use CS2\Services\CaseService;
 use CS2\Services\DailyService;
 use CS2\Services\InventoryService;
 use CS2\Services\MetricsService;
+use CS2\Services\OpenApiService;
 use CS2\Services\TradeUpService;
 use CS2\Services\WalletService;
 use CS2\Utils\HttpException;
@@ -51,6 +52,24 @@ try {
     if ($method === 'GET' && $path === '/metrics') {
         header('Content-Type: text/plain; version=0.0.4; charset=utf-8');
         echo MetricsService::prometheus();
+        exit;
+    }
+
+    if ($method === 'GET' && $path === '/api/openapi.json') {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(OpenApiService::specification(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($method === 'GET' && $path === '/api/docs') {
+        header('Content-Type: text/html; charset=utf-8');
+        echo OpenApiService::docsHtml('swagger');
+        exit;
+    }
+
+    if ($method === 'GET' && $path === '/api/redoc') {
+        header('Content-Type: text/html; charset=utf-8');
+        echo OpenApiService::docsHtml('redoc');
         exit;
     }
 
