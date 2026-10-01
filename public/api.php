@@ -15,6 +15,7 @@ use CS2\Services\InventoryService;
 use CS2\Services\MetricsService;
 use CS2\Services\TradeUpService;
 use CS2\Services\WalletService;
+use CS2\Utils\HttpException;
 use CS2\Utils\Logger;
 use CS2\Utils\Request;
 use CS2\Utils\Response;
@@ -32,11 +33,16 @@ register_shutdown_function(function () use ($started, $method, $path): void {
 });
 
 set_exception_handler(function (Throwable $e): void {
+    if ($e instanceof HttpException) {
+        Response::json(['detail' => $e->getMessage()], $e->statusCode());
+    }
+
     Logger::error($e->getMessage());
     if (Config::bool('APP_DEBUG', false)) {
-        Response::json(['detail'=>$e->getMessage()], 500);
+        Response::json(['detail' => $e->getMessage()], 500);
     }
-    Response::error('An internal server error occurred.', 500);
+
+    Response::json(['detail' => 'An internal server error occurred.'], 500);
 });
 
 try {
