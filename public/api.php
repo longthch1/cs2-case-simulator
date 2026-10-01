@@ -102,7 +102,9 @@ try {
     $needsUser = (
         str_starts_with($path, '/api/daily/') ||
         str_starts_with($path, '/api/inventory') ||
-        str_starts_with($path, '/api/wallet/') ||
+        ($path === '/api/wallet/redeem-code' ||
+         $path === '/api/wallet/deposit' ||
+         $path === '/api/wallet/transactions') ||
         $path === '/api/tradeup' ||
         (str_starts_with($path, '/api/cases/') && str_ends_with($path, '/open')) ||
         str_starts_with($path, '/api/admin/')
