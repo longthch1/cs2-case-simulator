@@ -112,6 +112,13 @@ final class WalletService
             $b->execute([$user['id']]);
             $balance = round((float)$b->fetch()['balance'], 2);
             $pdo->prepare('INSERT INTO transactions (user_id, type, amount, balance_after, description) VALUES (?, "deposit", ?, ?, ?)')->execute([$user['id'], $amount, $balance, sprintf('Nạp +$%.2f', $amount)]);
+
+            Logger::audit(sprintf(
+                'USER_DEPOSIT user=%s id=%d amount=%.2f balance=%.2f ip=%s',
+                $user['username'], $user['id'], $amount, $balance, Request::clientIp()
+            ));
+            Logger::security('DEPOSIT', ['user_id' => $user['id'], 'amount' => $amount]);
+
             return ['success'=>true,'deposited'=>$amount,'new_balance'=>$balance];
         });
     }
