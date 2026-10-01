@@ -49,6 +49,12 @@ Test:
     curl http://127.0.0.1/api/health
     curl http://127.0.0.1/api/cases
 
+## Full original CS2 catalog
+
+The PHP branch now carries the authoritative catalog from the original Python `app/seed_data.py` as `database/catalog.php`. It contains the original 42 cases and 1,161 source item entries (1,093 effective unique case/item IDs, matching the original SQLite primary-key behavior).
+
+Run `php database/seed.php` after importing the schema to populate the complete catalog. The older `cases-data.js` file is not used as the server's authoritative seed source.
+
 ## Data migration
 
 The legacy SQLite database can be migrated with:
