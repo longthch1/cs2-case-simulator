@@ -13,8 +13,14 @@ final class Response
         exit;
     }
 
+    /**
+     * Throw an HTTP exception instead of exiting immediately.
+     * This is important inside MySQL transactions: Database::transaction()
+     * must be able to catch the exception and roll back before the API
+     * front controller serializes the error response.
+     */
     public static function error(string $detail, int $status): never
     {
-        self::json(['detail' => $detail], $status);
+        throw new HttpException($detail, $status);
     }
 }
