@@ -43,7 +43,7 @@ final class Logger
 
         $line = sprintf(
             "[%s] [%s] %s%s",
-            gmdate('Y-m-d H:i:s'),
+            date('Y-m-d H:i:s'),
             $level,
             $message,
             PHP_EOL
