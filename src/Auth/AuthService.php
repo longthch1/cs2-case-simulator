@@ -87,7 +87,8 @@ final class AuthService
         }
 
         $stmt = Database::connection()->prepare('
-            SELECT id, username, email, password_hash, role, balance, daily_streak, last_daily_claim, avatar_url, created_at
+            SELECT id, username, email, password_hash, legacy_password_hash, legacy_salt,
+                   role, balance, daily_streak, last_daily_claim, avatar_url, created_at
             FROM users
             WHERE username = ? OR email = ?
             LIMIT 1
