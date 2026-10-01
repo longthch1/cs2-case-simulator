@@ -21,6 +21,8 @@ header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+header('X-XSS-Protection: 1; mode=block');
+header('Server: CS2-Engine/1.0');
 header('Content-Security-Policy: default-src \'self\' https: data: blob: \'unsafe-inline\' \'unsafe-eval\'; object-src \'none\'; frame-ancestors \'none\'; base-uri \'self\';');
 if (Config::isProduction() && (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')) {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
