@@ -25,7 +25,7 @@ final class Config
             }
 
             [$key, $value] = array_map('trim', explode('=', $line, 2));
-            $value = trim($value, ""'");
+            $value = trim($value, "\"'");
             self::$env[$key] = $value;
         }
     }
