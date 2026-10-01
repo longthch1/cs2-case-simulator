@@ -41,8 +41,11 @@ final class TradeUpService
             $stCount = count(array_filter($items, fn($x)=>(int)$x['is_stattrak'] === 1));
             $isOutputSt = random_int(0, 999999) < (int)round(($stCount / 10.0) * 1000000);
 
-            $inputCases = array_values(array_unique(array_map(fn($x)=>$x['case_id'], $items)));
-            $chosenCase = $inputCases[random_int(0, count($inputCases)-1)];
+            // Match the original Python random.choice(input_cases):
+            // keep duplicate case IDs so a case represented by more inputs has
+            // proportionally higher selection probability.
+            $inputCases = array_map(fn($x) => (string)$x['case_id'], $items);
+            $chosenCase = $inputCases[random_int(0, count($inputCases) - 1)];
 
             $stmt = $pdo->prepare('SELECT id, name, weapon, skin_name, rarity, rarity_name, rarity_color, rarity_tier, image, base_price, min_float, max_float FROM skins WHERE case_id = ? AND rarity_tier = ?');
             $stmt->execute([$chosenCase, $outputTier]);
@@ -68,6 +71,12 @@ final class TradeUpService
 
             $hist = $pdo->prepare('INSERT INTO tradeup_history (user_id, input_inventory_ids, output_inventory_id, input_tier, output_tier, output_float) VALUES (?, ?, ?, ?, ?, ?)');
             $hist->execute([$user['id'], implode(',', $ids), $newId, $inputTier, $outputTier, $outFloat]);
+
+            MetricsService::recordTradeup();
+            Logger::audit(sprintf(
+                'TRADEUP user=%s id=%d input_tier=%d output_tier=%d output=%s value=%.2f',
+                $user['username'], $user['id'], $inputTier, $outputTier, $target['name'], $value
+            ));
 
             return [
                 'success' => true,
