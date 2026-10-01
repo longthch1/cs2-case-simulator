@@ -25,7 +25,7 @@ foreach ($catalog as $caseIndex => $case) {
     }
 
     foreach ($case['items'] as $itemIndex => $item) {
-        foreach (['id', 'weapon', 'rarity', 'rarityName', 'rarityColor', 'rarityTier', 'image', 'basePrice', 'minFloat', 'maxFloat'] as $key) {
+        foreach (['id', 'fullName', 'weapon', 'skin', 'rarity', 'name', 'color', 'tier', 'price', 'min_float', 'max_float', 'image'] as $key) {
             if (!array_key_exists($key, $item)) {
                 fwrite(STDERR, "Case {$case['id']} item {$itemIndex} missing {$key}\n");
                 exit(1);
