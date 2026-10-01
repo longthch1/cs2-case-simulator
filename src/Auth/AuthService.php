@@ -217,7 +217,7 @@ final class AuthService
         }
 
         $ip = Request::clientIp();
-        if (!RateLimiter::allow('forgot:' . $ip, 5, 300)) {
+        if (!RateLimiter::allow('forgot:' . $ip, 8, 60)) {
             Response::error('Too many password reset attempts. Please try again later.', 429);
         }
 
