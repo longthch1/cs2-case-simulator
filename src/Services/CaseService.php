@@ -221,6 +221,10 @@ final class CaseService
         });
 
         $totalPayout = array_reduce($result['drops'], fn(float $sum, array $d): float => $sum + (float)$d['value'], 0.0);
+        // Preserve the original Python monitoring hook; persisted metrics are
+        // derived from open_history by MetricsService.
+        MetricsService::recordCaseOpen((float)$result['spent'], $totalPayout, $count);
+
         Logger::audit(sprintf(
             'CASE_OPEN user=%s id=%d case=%s count=%d spent=%.2f payout=%.2f ip=%s',
             $user['username'], $user['id'], $caseId, $count, $result['spent'], $totalPayout, Request::clientIp()
