@@ -1,0 +1,75 @@
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# ─── Security Headers ────────────────────────────────────────────────────────
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# ─── Prevent access to sensitive files ───────────────────────────────────────
+<FilesMatch "\.(env|log|sql|json|md|sh|bat|py|pyc|gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "^(config|includes|logs|sql)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ─── API Routing: /api/* → api/[handler].php ─────────────────────────────────
+# Route /api/auth/*
+RewriteRule ^api/auth(/.*)?$ api/auth.php [QSA,L,E=_path:auth$1]
+
+# Route /api/cases/*
+RewriteRule ^api/cases(/.*)?$ api/cases.php [QSA,L,E=_path:cases$1]
+
+# Route /api/inventory/*
+RewriteRule ^api/inventory(/.*)?$ api/inventory.php [QSA,L,E=_path:inventory$1]
+
+# Route /api/wallet/*
+RewriteRule ^api/wallet(/.*)?$ api/wallet.php [QSA,L,E=_path:wallet$1]
+
+# Route /api/daily/*
+RewriteRule ^api/daily(/.*)?$ api/daily.php [QSA,L,E=_path:daily$1]
+
+# Route /api/tradeup/*
+RewriteRule ^api/tradeup(/.*)?$ api/tradeup.php [QSA,L,E=_path:tradeup$1]
+
+# Route /api/admin/*
+RewriteRule ^api/admin(/.*)?$ api/admin.php [QSA,L,E=_path:admin$1]
+
+# Pass path info to PHP via _path query parameter
+RewriteCond %{REQUEST_URI} ^/api/auth(/.*)$
+RewriteRule ^ - [E=_path:%1]
+
+# ─── Static files served directly ────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ─── Everything else → index.php (SPA) ───────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# ─── Gzip Compression ────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>
+
+# ─── Browser Caching for Static Assets ───────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+

@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Case Opening Simulator | Hệ Thống Giả Lập Mở Rương CS2 Đỉnh Cao</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            csOrange: '#e58e26',
+            csBlue: '#4b69ff',
+            csPurple: '#8847ff',
+            csPink: '#d32ce6',
+            csRed: '#eb4b4b',
+            csGold: '#ffd700',
+            csDark: '#0b0e14',
+            csCard: '#131822',
+            csBorder: '#212a3d',
+            csHover: '#1c2436'
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts: Rajdhani & Chakra Petch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#0b0e14] text-slate-100 min-h-screen flex flex-col font-sans select-none">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="header-glass sticky top-0 z-40 border-b border-[#212a3d] w-full">
+    <div class="w-full px-4 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
+
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer group py-1" onclick="app.navigate('cases')" title="CS2 Case Opening Simulator">
+        <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 p-[1.5px] shadow-lg shadow-orange-500/30 group-hover:shadow-orange-500/50 group-hover:scale-105 transition-all duration-300">
+          <div class="w-full h-full rounded-[10px] bg-[#0d121c] flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-500/25 via-transparent to-amber-500/10"></div>
+            <div class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-csOrange animate-pulse"></div>
+            <i class="fa-solid fa-box-open text-csOrange text-xl group-hover:text-amber-300 group-hover:rotate-6 transition-all duration-300 relative z-10"></i>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="flex items-center gap-2">
+            <span class="font-tactical font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-400 drop-shadow-[0_2px_8px_rgba(245,158,11,0.35)]">
+              CS2
+            </span>
+            <span class="font-tactical font-extrabold text-base sm:text-lg tracking-wide text-white group-hover:text-amber-200 transition">
+              Case Opening
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-orange-500/20 border border-orange-500/40 text-[10px] font-tactical font-black tracking-widest text-csOrange uppercase">
+              Simulator
+            </span>
+          </div>
+          <div class="text-[10px] text-slate-400 font-mono tracking-wider flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span class="text-slate-300 font-semibold">CS2 DROP SYSTEM</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-csOrange font-bold">100% UNBOX ENGINE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="hidden md:flex items-center space-x-1 font-tactical text-sm">
+        <button onclick="app.navigate('cases')" id="nav-btn-cases" class="px-3 py-1.5 rounded transition text-csOrange bg-orange-500/10 font-bold flex items-center gap-2">
+          <i class="fa-solid fa-box-open"></i> MỞ RƯƠNG
+        </button>
+        <button onclick="app.navigate('inventory')" id="nav-btn-inventory" class="px-3 py-1.5 rounded transition text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-2">
+          <i class="fa-solid fa-briefcase"></i> KHO ĐỒ
+          <span id="nav-inventory-badge" class="hidden text-xs bg-orange-500 text-black font-bold px-1.5 py-0.2 rounded-full">0</span>
+        </button>
+        <button onclick="app.navigate('tradeup')" id="nav-btn-tradeup" class="px-3 py-1.5 rounded transition text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-2">
+          <i class="fa-solid fa-arrows-spin"></i> TRADE-UP CONTRACT
+        </button>
+        <button onclick="app.openDailyModal()" id="nav-btn-daily" class="px-3 py-1.5 rounded transition text-amber-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-2 relative">
+          <i class="fa-solid fa-calendar-check text-csOrange"></i> QUÀ HÀNG NGÀY
+          <span id="daily-ready-dot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+        </button>
+        <button onclick="app.navigate('admin')" id="nav-btn-admin" class="px-3 py-1.5 rounded transition text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-2">
+          <i class="fa-solid fa-server"></i> QUẢN TRỊ & GIÁM SÁT
+        </button>
+
+      </nav>
+
+      <!-- User Controls & Wallet -->
+      <div class="flex items-center space-x-3">
+        <!-- Sound FX Toggle -->
+        <button onclick="app.toggleSound()" id="sound-btn" class="p-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-300 hover:text-csOrange transition" title="Âm thanh FX">
+          <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+        </button>
+
+        <!-- Wallet Container -->
+        <div id="wallet-container" class="flex items-center space-x-2 bg-[#131822] border border-[#212a3d] px-3 py-1.5 rounded-lg">
+          <i class="fa-solid fa-wallet text-csOrange text-sm"></i>
+          <div>
+            <div class="text-[10px] text-slate-400 font-mono uppercase leading-tight">SỐ DƯ KHẢ DỤNG</div>
+            <div id="user-balance-display" class="font-tactical text-base font-bold text-green-400 leading-tight">$0.00</div>
+          </div>
+          <button onclick="app.openDepositModal()" class="ml-1 px-2.5 py-1 text-xs font-tactical font-bold bg-green-500/20 text-green-400 border border-green-500/40 rounded hover:bg-green-500 hover:text-black transition flex items-center gap-1">
+            <i class="fa-solid fa-plus"></i> NẠP
+          </button>
+        </div>
+
+        <!-- User Authentication State -->
+        <div id="user-profile-widget" class="flex items-center space-x-2">
+          <!-- Populated by app.js: Either Login button or User Profile Pill -->
+          <button onclick="app.openAuthModal('login')" class="px-3 py-1.5 text-xs font-tactical font-bold bg-csOrange text-black rounded hover:bg-amber-400 transition flex items-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-right-to-bracket"></i> ĐĂNG NHẬP
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT CONTAINER ================= -->
+  <main class="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-6">
+
+    <!-- 1. CASES CATALOG VIEW -->
+    <section id="view-cases" class="space-y-6">
+      <!-- High-Impact Psychological Hero Banner with CS2 Background -->
+      <div class="relative overflow-hidden rounded-2xl border-2 border-csOrange/40 shadow-2xl p-6 sm:p-10 text-white min-h-[300px] flex items-center">
+        <!-- Background Image with Dimmed Tactical Overlay -->
+        <div class="absolute inset-0 bg-cover bg-center pointer-events-none" style="background-image: url('/static/img/cs2_banner_bg.jpg'); filter: brightness(0.38) contrast(1.15);"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#070a10] via-[#090d15]/90 to-[#070a10]/50 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-orange-500/10 to-transparent pointer-events-none"></div>
+        
+        <!-- Content Area -->
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-tactical bg-gradient-to-r from-orange-500/30 to-amber-500/20 text-csOrange border border-orange-500/50 shadow-lg shadow-orange-500/20">
+            <i class="fa-solid fa-fire text-amber-400 animate-pulse"></i> 
+            <span>SỰ KIỆN NỔ HŨ DAO VÀNG ★ MIỄN PHÍ 100%</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-tactical font-black tracking-wide text-white leading-tight uppercase drop-shadow-lg">
+            CHỈ 1 CÚ CLICK — <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300">SĂN DAO VÀNG $10,000+</span> NGAY!
+          </h1>
+
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed drop-shadow max-w-2xl">
+            Cảm nhận từng nhịp tim đập thình thịch khi kim quay áp sát viền <strong class="text-csGold font-tactical">★ SIÊU HIẾM</strong>! Điểm danh chuỗi 7 ngày tích lũy quà tặng mở rương miễn phí — thỏa mãn đam mê đập rương CS2 đỉnh cao. Liệu hôm nay thần may mắn có gọi tên bạn?
+          </p>
+
+          <!-- 4 Psychological Trigger Value Props -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <div onclick="app.openDailyModal()" class="flex items-center gap-2.5 p-2.5 rounded-lg bg-black/50 backdrop-blur-md border border-slate-700/60 shadow cursor-pointer hover:border-csOrange transition">
+              <i class="fa-solid fa-gift text-green-400 text-xl"></i>
+              <div>
+                <div class="text-[11px] font-tactical font-bold text-white uppercase">QUÀ MỖI NGÀY</div>
+                <div class="text-[9px] text-slate-300 font-mono">Tích lũy chuỗi lên tới $150</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-black/50 backdrop-blur-md border border-slate-700/60 shadow">
+              <i class="fa-solid fa-trophy text-csGold text-xl"></i>
+              <div>
+                <div class="text-[11px] font-tactical font-bold text-white uppercase">TỈ LỆ 100% VALVE</div>
+                <div class="text-[9px] text-slate-300 font-mono">Chuẩn xác thuật toán CS2</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-black/50 backdrop-blur-md border border-slate-700/60 shadow">
+              <i class="fa-solid fa-coins text-amber-400 text-xl"></i>
+              <div>
+                <div class="text-[11px] font-tactical font-bold text-white uppercase">BÁN THU TIỀN NGAY</div>
+                <div class="text-[9px] text-slate-300 font-mono">Hoàn vốn tức thì để quay tiếp</div>
+              </div>
+            </div>
+            <div onclick="app.openDailyModal()" class="flex items-center gap-2.5 p-2.5 rounded-lg bg-black/50 backdrop-blur-md border border-slate-700/60 shadow cursor-pointer hover:border-csOrange transition">
+              <i class="fa-solid fa-calendar-check text-green-400 text-xl"></i>
+              <div>
+                <div class="text-[11px] font-tactical font-bold text-white uppercase">ĐIỂM DANH 7 NGÀY</div>
+                <div class="text-[9px] text-slate-300 font-mono">Nhận quà mở rương miễn phí</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action CTA -->
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <button onclick="document.getElementById('case-search-input').focus(); document.getElementById('case-search-input').scrollIntoView({behavior: 'smooth'})" class="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-black font-tactical font-extrabold text-sm rounded-lg shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+              <i class="fa-solid fa-bolt"></i> THỬ VẬN MAY NGAY — BẤM LÀ NỔ!
+            </button>
+            <span class="text-xs text-slate-300 font-mono flex items-center gap-1.5 bg-black/30 px-3 py-1.5 rounded-md border border-slate-700/50">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span> 
+              Đầy đủ 42+ rương CS2 huyền thoại &amp; 1,160+ skin sẵn sàng
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cases Grid Header -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-csBorder pb-4">
+        <div>
+          <h2 class="text-xl font-tactical font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-boxes-stacked text-csOrange"></i> DANH SÁCH RƯƠNG CS2 SẴN SÀNG
+          </h2>
+          <p class="text-xs text-slate-400">Đầy đủ 42 bộ sưu tập CS2 với 1,160+ skin và hình ảnh chuẩn Akamai Steam</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-tactical">
+          <span class="text-slate-400">Tìm kiếm:</span>
+          <input type="text" id="case-search-input" oninput="app.filterCases(this.value)" placeholder="Ví dụ: Kilowatt, Gallery, Bravo, AK-47..." class="bg-[#131822] border border-csBorder px-3 py-1.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+      </div>
+
+      <!-- Case Categories Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 text-xs font-tactical">
+        <button onclick="app.filterCaseCategory('all')" id="case-cat-all" class="px-3 py-1.5 rounded bg-csOrange text-black font-bold transition">Tất cả rương (42)</button>
+        <button onclick="app.filterCaseCategory('cs2')" id="case-cat-cs2" class="px-3 py-1.5 rounded bg-[#131822] border border-csBorder text-slate-300 hover:text-white hover:border-csOrange transition">⚡ CS2 Mới Nhất</button>
+        <button onclick="app.filterCaseCategory('knives')" id="case-cat-knives" class="px-3 py-1.5 rounded bg-[#131822] border border-csBorder text-csGold hover:border-csGold transition">🔪 Chuyên Dao (Kukri, Butterfly, Karambit...)</button>
+        <button onclick="app.filterCaseCategory('gloves')" id="case-cat-gloves" class="px-3 py-1.5 rounded bg-[#131822] border border-csBorder text-purple-300 hover:border-purple-400 transition">🧤 Chuyên Găng Tay (Clutch, Revolution...)</button>
+        <button onclick="app.filterCaseCategory('grail')" id="case-cat-grail" class="px-3 py-1.5 rounded bg-[#131822] border border-csBorder text-amber-300 hover:border-amber-400 transition">🏆 Huyền Thoại (Weapon Case #1, Bravo...)</button>
+      </div>
+
+
+      <!-- Cases Cards Grid -->
+      <div id="cases-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered dynamically by app.js -->
+        <div class="col-span-full py-12 text-center text-slate-400">
+          <i class="fa-solid fa-spinner fa-spin text-3xl text-csOrange mb-2"></i>
+          <div>Đang tải danh sách rương CS2...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CASE OPENING SCREEN VIEW -->
+    <section id="view-open-case" class="hidden space-y-6">
+      <!-- Back button and case title bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-csBorder pb-4">
+        <div class="flex items-center space-x-3">
+          <button onclick="app.navigate('cases')" class="px-3 py-1.5 bg-[#131822] hover:bg-[#1c2436] border border-csBorder rounded text-slate-300 hover:text-white transition flex items-center gap-2 text-sm font-tactical">
+            <i class="fa-solid fa-arrow-left"></i> QUAY LẠI
+          </button>
+          <div>
+            <h1 id="open-case-name" class="text-2xl font-tactical font-bold text-white flex items-center gap-2">
+              Kilowatt Case
+            </h1>
+            <p id="open-case-desc" class="text-xs text-slate-400">Chứa các skin mới nhất từ phiên bản CS2</p>
+          </div>
+        </div>
+
+        <!-- Fast Open & Controls -->
+        <div class="flex items-center space-x-4">
+          <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-300 font-tactical">
+            <input type="checkbox" id="fast-open-toggle" class="form-checkbox text-csOrange rounded bg-slate-900 border-csBorder">
+            <span>MỞ NHANH (FAST SKIP)</span>
+          </label>
+          <div class="text-right">
+            <div class="text-[10px] text-slate-400 uppercase font-mono">TỔNG GIÁ 1 LƯỢT</div>
+            <div id="open-case-unit-price" class="text-lg font-tactical font-bold text-csOrange">$5.98</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ROULETTE REEL VIEWPORT ================= -->
+      <div id="roulette-multi-container" class="space-y-3 my-6">
+        <!-- Rendered dynamically for 1, 2, 3, or 5 reels -->
+        <div class="roulette-wrapper relative" id="roulette-wrapper-0">
+          <div class="roulette-mask-left"></div>
+          <div class="roulette-mask-right"></div>
+          <div class="roulette-needle"></div>
+          <div class="roulette-viewport" id="roulette-viewport-0">
+            <div class="roulette-track" id="roulette-track-0"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPEN CONTROLS BAR -->
+      <div class="bg-[#131822] border border-csBorder rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <!-- Quantity selection -->
+        <div class="flex items-center space-x-2">
+          <span class="text-xs text-slate-400 font-tactical">SỐ LƯỢNG MỞ:</span>
+          <div class="inline-flex rounded-md shadow-sm" role="group">
+            <button onclick="app.setOpenCount(1)" id="btn-count-1" class="px-3 py-1.5 text-xs font-tactical font-bold border border-csBorder rounded-l-lg bg-orange-500 text-black">x1</button>
+            <button onclick="app.setOpenCount(2)" id="btn-count-2" class="px-3 py-1.5 text-xs font-tactical font-bold border-t border-b border-csBorder bg-[#1a2230] text-slate-300 hover:text-white">x2</button>
+            <button onclick="app.setOpenCount(3)" id="btn-count-3" class="px-3 py-1.5 text-xs font-tactical font-bold border-t border-b border-r border-csBorder bg-[#1a2230] text-slate-300 hover:text-white">x3</button>
+            <button onclick="app.setOpenCount(5)" id="btn-count-5" class="px-3 py-1.5 text-xs font-tactical font-bold border border-csBorder rounded-r-lg bg-[#1a2230] text-slate-300 hover:text-white">x5</button>
+          </div>
+        </div>
+
+        <!-- Big Spin Button -->
+        <div class="flex items-center space-x-3">
+          <button id="btn-open-case" onclick="app.executeOpenCase()" class="px-8 py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-black font-tactical font-extrabold text-lg rounded-lg shadow-xl shadow-orange-500/20 hover:shadow-orange-500/40 transition transform active:scale-95 flex items-center gap-3">
+            <i class="fa-solid fa-key"></i>
+            <span>MỞ RƯƠNG</span>
+            <span id="open-cost-total" class="px-2 py-0.5 rounded bg-black/20 text-black font-mono text-sm">$5.98</span>
+          </button>
+        </div>
+
+        <!-- Security & Status indicator -->
+        <div class="text-xs text-slate-400 font-mono text-right flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-green-400"></i>
+          <div>
+            <div class="text-slate-300 font-bold">HỆ THỐNG MỞ RƯƠNG</div>
+            <div class="text-slate-400 text-[10px]">Tỉ lệ chuẩn 100% Valve CS2</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Multi-Drop Result Showcase Area (if opened x2, x3, x5) -->
+      <div id="multi-drop-container" class="hidden space-y-3">
+        <h3 class="text-base font-tactical font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-trophy text-csOrange"></i> KẾT QUẢ MỞ RƯƠNG LẦN NÀY:
+        </h3>
+        <div id="multi-drop-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+
+      <!-- Case Contents Catalog (All skins inside this crate) -->
+      <div class="space-y-4 pt-4 border-t border-csBorder">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-tactical font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-csOrange"></i> DANH SÁCH VẬT PHẨM TRONG RƯƠNG
+          </h3>
+          <div class="flex items-center space-x-2 text-xs font-tactical">
+            <span class="inline-block w-3 h-3 rounded-full bg-rarity-1"></span> Mil-Spec (79.92%)
+            <span class="inline-block w-3 h-3 rounded-full bg-rarity-2 ml-2"></span> Restricted (15.98%)
+            <span class="inline-block w-3 h-3 rounded-full bg-rarity-3 ml-2"></span> Classified (3.20%)
+            <span class="inline-block w-3 h-3 rounded-full bg-rarity-4 ml-2"></span> Covert (0.64%)
+            <span class="inline-block w-3 h-3 rounded-full bg-rarity-5 ml-2"></span> ★ Dao/Găng (0.26%)
+          </div>
+        </div>
+        <div id="case-items-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INVENTORY VIEW -->
+    <section id="view-inventory" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-csBorder pb-4">
+        <div>
+          <h1 class="text-2xl font-tactical font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-briefcase text-csOrange"></i> KHO ĐỒ CÁ NHÂN
+          </h1>
+          <p class="text-xs text-slate-400">Các skin bạn đã unbox từ rương CS2</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="text-right">
+            <div class="text-[10px] text-slate-400 uppercase font-mono">TỔNG GIÁ TRỊ KHO</div>
+            <div id="inv-total-value" class="text-xl font-tactical font-bold text-green-400">$0.00</div>
+          </div>
+          <button onclick="app.executeSellAll()" class="px-4 py-2 bg-red-500/20 hover:bg-red-500 hover:text-black border border-red-500/40 text-red-400 font-tactical text-xs font-bold rounded transition flex items-center gap-1.5">
+            <i class="fa-solid fa-money-bill-transfer"></i> BÁN TẤT CẢ (QUICK SELL)
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Sorting Bar -->
+      <div class="bg-[#131822] border border-csBorder rounded-lg p-3 flex flex-wrap items-center justify-between gap-3 text-xs font-tactical">
+        <!-- Rarity Filters -->
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="text-slate-400 mr-1">Phẩm cấp:</span>
+          <button onclick="app.filterInventory('all')" id="inv-filter-all" class="px-2.5 py-1 rounded bg-csOrange text-black font-bold">Tất cả</button>
+          <button onclick="app.filterInventory(5)" id="inv-filter-5" class="px-2.5 py-1 rounded bg-[#1a2230] text-csGold hover:bg-slate-700">★ Dao/Găng</button>
+          <button onclick="app.filterInventory(4)" id="inv-filter-4" class="px-2.5 py-1 rounded bg-[#1a2230] text-csRed hover:bg-slate-700">Covert</button>
+          <button onclick="app.filterInventory(3)" id="inv-filter-3" class="px-2.5 py-1 rounded bg-[#1a2230] text-csPink hover:bg-slate-700">Classified</button>
+          <button onclick="app.filterInventory(2)" id="inv-filter-2" class="px-2.5 py-1 rounded bg-[#1a2230] text-csPurple hover:bg-slate-700">Restricted</button>
+          <button onclick="app.filterInventory(1)" id="inv-filter-1" class="px-2.5 py-1 rounded bg-[#1a2230] text-csBlue hover:bg-slate-700">Mil-Spec</button>
+        </div>
+
+        <!-- Weapon Type Filter -->
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-400">Loại vũ khí:</span>
+          <select id="inv-weapon-type-select" onchange="app.filterInventoryByWeaponType(this.value)" class="bg-[#0b0e14] border border-csBorder px-2.5 py-1 rounded text-white focus:outline-none">
+            <option value="all">Tất cả vũ khí</option>
+            <option value="rifle">Rifle (AK-47, M4A4, M4A1-S, AWP...)</option>
+            <option value="pistol">Pistol (Deagle, Glock, USP...)</option>
+            <option value="smg">SMG (MAC-10, MP9, P90...)</option>
+            <option value="heavy">Heavy (Nova, XM1014, Negev...)</option>
+            <option value="knife">★ Dao (Kukri, Butterfly, Karambit...)</option>
+            <option value="glove">🧤 Găng Tay (Sport, Specialist...)</option>
+          </select>
+        </div>
+
+        <!-- Sort Select -->
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-400">Sắp xếp:</span>
+          <select id="inv-sort-select" onchange="app.sortInventory(this.value)" class="bg-[#0b0e14] border border-csBorder px-2.5 py-1 rounded text-white focus:outline-none">
+            <option value="date_desc">Mới nhất trước</option>
+            <option value="value_desc">Giá trị cao nhất</option>
+            <option value="value_asc">Giá trị thấp nhất</option>
+            <option value="float_asc">Độ mới (Float thấp nhất)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Inventory Grid -->
+      <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <!-- Rendered by app.js -->
+        <div class="col-span-full py-16 text-center text-slate-500">
+          <i class="fa-solid fa-box-open text-4xl mb-3"></i>
+          <div>Kho đồ của bạn đang trống! Hãy mở rương để tìm skin hiếm.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TRADE-UP CONTRACT VIEW -->
+    <section id="view-tradeup" class="hidden space-y-6">
+      <div class="border-b border-csBorder pb-4">
+        <h1 class="text-2xl font-tactical font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-arrows-spin text-csOrange"></i> CS2 TRADE-UP CONTRACT (HỢP ĐỒNG NÂNG CẤP)
+        </h1>
+        <p class="text-xs text-slate-400">Chọn 10 skin cùng phẩm cấp trong kho đồ để đổi lấy 1 skin có phẩm cấp cao hơn một bậc!</p>
+      </div>
+
+      <!-- Trade Up Workbench -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: 10 Input Slots -->
+        <div class="lg:col-span-2 bg-[#131822] border border-csBorder rounded-xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-tactical font-bold text-white">VẬT PHẨM ĐÃ CHỌN (<span id="tradeup-selected-count">0</span>/10)</h3>
+            <button onclick="app.clearTradeUp()" class="text-xs text-slate-400 hover:text-red-400">Xóa tất cả</button>
+          </div>
+          
+          <!-- 10 Slots Grid -->
+          <div id="tradeup-slots" class="grid grid-cols-5 gap-3">
+            <!-- 10 slots populated by app.js -->
+          </div>
+
+          <!-- Trade-Up Action Button -->
+          <div class="pt-4 border-t border-csBorder flex items-center justify-between">
+            <div class="text-xs text-slate-400 font-mono">
+              <div>Độ mòn trung bình (Avg Float): <span id="tradeup-avg-float" class="text-white font-bold">0.000000</span></div>
+              <div class="text-[11px] text-slate-500">Skin nhận được sẽ tính float theo công thức chuẩn CS2.</div>
+            </div>
+            <button id="btn-execute-tradeup" onclick="app.executeTradeUp()" disabled class="px-6 py-2.5 bg-slate-700 text-slate-400 font-tactical font-bold text-sm rounded-lg transition">
+              KÝ HỢP ĐỒNG (TRADE-UP)
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Inventory Picker for Trade-Up -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl p-5 space-y-3 flex flex-col h-[520px]">
+          <h3 class="text-sm font-tactical font-bold text-white">CHỌN SKIN TỪ KHO ĐỒ</h3>
+          <p class="text-[11px] text-slate-400">Nhấp vào skin để đưa vào 10 vị trí hợp đồng</p>
+          <div id="tradeup-inventory-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            <!-- Trade up eligible items -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- 6. ADMIN DASHBOARD & MONITORING VIEW -->
+    <section id="view-admin" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-csBorder pb-4">
+        <div>
+          <h1 class="text-2xl font-tactical font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-csOrange"></i> TRUNG TÂM QUẢN TRỊ & GIÁM SÁT TOÀN DIỆN
+          </h1>
+          <p class="text-xs text-slate-400">Giám sát kinh tế, điều chỉnh số dư & quyền User, quản lý Giftcode 1h, cấu hình giá rương và Audit Logs</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="/api/docs" target="_blank" class="px-3 py-1.5 bg-[#131822] hover:bg-[#1c2436] border border-csBorder rounded text-xs font-tactical text-slate-300 hover:text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-book"></i> FASTAPI SWAGGER
+          </a>
+          <a href="/metrics" target="_blank" class="px-3 py-1.5 bg-[#131822] hover:bg-[#1c2436] border border-csBorder rounded text-xs font-tactical text-slate-300 hover:text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-chart-line"></i> PROMETHEUS METRICS
+          </a>
+        </div>
+      </div>
+
+      <!-- Admin Sub-Navigation Tabs -->
+      <div class="flex flex-wrap gap-2 border-b border-csBorder/70 pb-3">
+        <button id="adm-nav-btn-overview" onclick="app.switchAdminTab('overview')" class="px-3.5 py-2 rounded-lg font-tactical text-xs font-bold transition flex items-center gap-2 bg-csOrange text-black">
+          <i class="fa-solid fa-chart-pie"></i> TỔNG QUAN & KINH TẾ
+        </button>
+        <button id="adm-nav-btn-users" onclick="app.switchAdminTab('users')" class="px-3.5 py-2 rounded-lg font-tactical text-xs font-bold transition flex items-center gap-2 bg-[#131822] border border-csBorder text-slate-300 hover:text-white hover:border-csOrange">
+          <i class="fa-solid fa-users-gear"></i> QUẢN LÝ USER & SỐ DƯ
+        </button>
+        <button id="adm-nav-btn-giftcode" onclick="app.switchAdminTab('giftcode')" class="px-3.5 py-2 rounded-lg font-tactical text-xs font-bold transition flex items-center gap-2 bg-[#131822] border border-csBorder text-slate-300 hover:text-white hover:border-csOrange">
+          <i class="fa-solid fa-gift"></i> QUẢN LÝ GIFTCODE (1H)
+        </button>
+        <button id="adm-nav-btn-cases" onclick="app.switchAdminTab('cases')" class="px-3.5 py-2 rounded-lg font-tactical text-xs font-bold transition flex items-center gap-2 bg-[#131822] border border-csBorder text-slate-300 hover:text-white hover:border-csOrange">
+          <i class="fa-solid fa-boxes-stacked"></i> QUẢN LÝ GIÁ RƯƠNG (47 RƯƠNG)
+        </button>
+        <button id="adm-nav-btn-logs" onclick="app.switchAdminTab('logs')" class="px-3.5 py-2 rounded-lg font-tactical text-xs font-bold transition flex items-center gap-2 bg-[#131822] border border-csBorder text-slate-300 hover:text-white hover:border-csOrange">
+          <i class="fa-solid fa-terminal"></i> NHẬT KÝ SERVER & AUDIT
+        </button>
+      </div>
+
+      <!-- ================= TAB 1: OVERVIEW & SYSTEM TELEMETRY ================= -->
+      <div id="adm-subtab-overview" class="space-y-6">
+        <!-- System Health Cards Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-[#131822] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">TRẠNG THÁI HỆ THỐNG</div>
+            <div class="text-lg font-tactical font-bold text-green-400 flex items-center gap-2 mt-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+              <span id="adm-health-status">HOẠT ĐỘNG TỐT</span>
+            </div>
+            <div id="adm-uptime" class="text-[11px] text-slate-500 font-mono mt-0.5">Uptime: 0m</div>
+          </div>
+
+          <div class="bg-[#131822] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">TIÊU THỤ RAM</div>
+            <div id="adm-memory" class="text-xl font-tactical font-bold text-white mt-1">0.0 MB</div>
+            <div id="adm-latency" class="text-[11px] text-slate-500 font-mono mt-0.5">Độ trễ TB: 0.0ms</div>
+          </div>
+
+          <div class="bg-[#131822] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">TỔNG RƯƠNG ĐÃ MỞ</div>
+            <div id="adm-cases-opened" class="text-xl font-tactical font-bold text-csOrange mt-1">0</div>
+            <div id="adm-requests-count" class="text-[11px] text-slate-500 font-mono mt-0.5">Total HTTP: 0</div>
+          </div>
+
+          <div class="bg-[#131822] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">LỢI NHUẬN SÀN (HOUSE EDGE)</div>
+            <div id="adm-profit" class="text-xl font-tactical font-bold text-green-400 mt-1">$0.00</div>
+            <div id="adm-total-spent" class="text-[11px] text-slate-500 font-mono mt-0.5">Doanh thu: $0.00</div>
+          </div>
+        </div>
+
+        <!-- Economic & Platform Metrics Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-[#101520] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">NGƯỜI DÙNG ĐĂNG KÝ</div>
+            <div id="adm-total-users" class="text-xl font-tactical font-bold text-white mt-1">0</div>
+            <div class="text-[11px] text-slate-400 font-mono mt-0.5">Số dư ví lưu thông: <span id="adm-circulating-bal" class="text-amber-400 font-bold">$0.00</span></div>
+          </div>
+
+          <div class="bg-[#101520] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">TỶ LỆ HOÀN TRẢ (RTP)</div>
+            <div id="adm-rtp-rate" class="text-xl font-tactical font-bold text-cyan-400 mt-1">0.0%</div>
+            <div class="text-[11px] text-slate-400 font-mono mt-0.5">Tổng đã trả: <span id="adm-total-payout" class="text-slate-300 font-bold">$0.00</span></div>
+          </div>
+
+          <div class="bg-[#101520] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">VẬT PHẨM TRONG KHO</div>
+            <div id="adm-inv-skins-count" class="text-xl font-tactical font-bold text-purple-400 mt-1">0</div>
+            <div class="text-[11px] text-slate-400 font-mono mt-0.5">Đã bán: <span id="adm-sold-skins-count" class="text-slate-300 font-bold">0</span> | Hợp đồng: <span id="adm-tradeup-count" class="text-slate-300 font-bold">0</span></div>
+          </div>
+
+          <div class="bg-[#101520] border border-csBorder rounded-lg p-4">
+            <div class="text-[10px] text-slate-400 font-mono uppercase">GIFTCODE PHÁT RA</div>
+            <div id="adm-code-redeems-count" class="text-xl font-tactical font-bold text-amber-400 mt-1">0 lượt</div>
+            <div class="text-[11px] text-slate-400 font-mono mt-0.5">Đã cấp: <span id="adm-gift-distributed" class="text-green-400 font-bold">$0.00</span></div>
+          </div>
+        </div>
+
+        <!-- Live Code Quick Status Banner -->
+        <div class="bg-[#131822] border border-amber-500/40 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-csGold text-xl">
+              <i class="fa-solid fa-gift"></i>
+            </div>
+            <div>
+              <div class="text-xs font-tactical text-amber-400 font-bold uppercase">Mã Giftcode 1h Đang Hoạt Động</div>
+              <div class="flex items-center gap-3 mt-0.5">
+                <span id="adm-overview-live-code" class="font-mono text-2xl font-black text-csGold tracking-widest">------</span>
+                <span class="text-xs font-mono text-slate-400">Hết hạn sau: <span id="adm-overview-code-timer" class="text-amber-300 font-bold">--:--</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="app.switchAdminTab('giftcode')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-tactical font-bold rounded-lg transition flex items-center gap-1.5">
+              <i class="fa-solid fa-gear"></i> Quản lý Giftcode
+            </button>
+            <button onclick="app.adminForceNewCode()" class="px-4 py-2 bg-csOrange hover:bg-amber-400 text-black text-xs font-tactical font-black rounded-lg transition flex items-center gap-1.5">
+              <i class="fa-solid fa-bolt"></i> Tạo mã mới ngay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: USER MANAGEMENT & BALANCE ================= -->
+      <div id="adm-subtab-users" class="hidden space-y-4">
+        <!-- User Filters & Search Bar -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex-1 w-full flex items-center gap-2">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-500 text-xs"></i>
+              <input type="text" id="adm-user-search-input" onkeyup="app.debounceUserSearch()" placeholder="Tìm theo tên đăng nhập hoặc email..." class="w-full bg-[#0b0e14] border border-csBorder pl-8 pr-3 py-2 rounded-lg text-xs font-tactical text-white focus:outline-none focus:border-csOrange">
+            </div>
+            <select id="adm-user-role-select" onchange="app.loadAdminUsers()" class="bg-[#0b0e14] border border-csBorder px-3 py-2 rounded-lg text-xs font-tactical text-white focus:outline-none focus:border-csOrange">
+              <option value="">Tất cả quyền</option>
+              <option value="user">Chỉ User</option>
+              <option value="admin">Chỉ Admin</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="app.loadAdminUsers()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-tactical text-slate-300 hover:text-white transition flex items-center gap-1.5">
+              <i class="fa-solid fa-arrows-rotate"></i> Làm mới danh sách
+            </button>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-tactical border-collapse">
+              <thead>
+                <tr class="bg-[#0b0e14] text-slate-400 border-b border-csBorder font-mono uppercase text-[11px]">
+                  <th class="py-3 px-4">ID</th>
+                  <th class="py-3 px-4">Tên đăng nhập</th>
+                  <th class="py-3 px-4">Email</th>
+                  <th class="py-3 px-4">Quyền</th>
+                  <th class="py-3 px-4 text-right">Số dư ví</th>
+                  <th class="py-3 px-4 text-center">Rương mở</th>
+                  <th class="py-3 px-4 text-center">Kho đồ</th>
+                  <th class="py-3 px-4">Ngày đăng ký</th>
+                  <th class="py-3 px-4 text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="adm-users-table-body" class="divide-y divide-csBorder/50 font-sans">
+                <tr>
+                  <td colspan="9" class="py-8 text-center text-slate-500 font-tactical">Đang tải danh sách người dùng...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 3: GIFTCODE MANAGER ================= -->
+      <div id="adm-subtab-giftcode" class="hidden space-y-5">
+        <!-- Active Giftcode Card & Controller -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Active Code Telemetry -->
+          <div class="md:col-span-2 bg-[#131822] border border-amber-500/40 rounded-xl p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-csBorder pb-3">
+              <div>
+                <span class="text-[10px] font-mono text-amber-400 uppercase font-bold tracking-wider">MÃ CODE HIỆN HÀNH (LIVE CODE)</span>
+                <h3 class="text-lg font-tactical font-bold text-white">Trạng thái phát ngẫu nhiên mỗi giờ</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-xs font-tactical text-green-400 font-bold">ĐANG HOẠT ĐỘNG</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0b0e14] p-4 rounded-xl border border-csBorder">
+              <div class="text-center sm:text-left">
+                <div class="text-[11px] font-mono text-slate-400">MÃ CODE 6 CHỮ SỐ:</div>
+                <div id="adm-gift-live-code" class="font-mono text-4xl font-black text-csGold tracking-[0.25em] mt-1">------</div>
+                <div class="text-xs font-mono text-slate-400 mt-1">
+                  Hiệu lực còn: <span id="adm-gift-timer" class="text-amber-300 font-bold">--:--</span>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 w-full sm:w-auto">
+                <button onclick="app.adminForceNewCode()" class="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-black font-tactical font-black text-xs rounded-lg transition shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-bolt"></i> PHÁT MÃ MỚI NGAY LẬP TỨC
+                </button>
+                <div class="text-[10px] text-slate-500 font-mono text-center">* Mã cũ sẽ bị hủy hiệu lực ngay lập tức</div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div class="bg-[#0b0e14] p-3 rounded-lg border border-csBorder">
+                <div class="text-[10px] font-mono text-slate-400">SỐ LƯỢT ĐÃ NẠP MÃ NÀY</div>
+                <div id="adm-gift-current-redeems" class="text-lg font-tactical font-bold text-white mt-0.5">0 lượt</div>
+              </div>
+              <div class="bg-[#0b0e14] p-3 rounded-lg border border-csBorder">
+                <div class="text-[10px] font-mono text-slate-400">TỔNG TIỀN ĐÃ CẤP CHO MÃ NÀY</div>
+                <div id="adm-gift-current-total-paid" class="text-lg font-tactical font-bold text-green-400 mt-0.5">$0.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adjust Reward Amount Settings -->
+          <div class="bg-[#131822] border border-csBorder rounded-xl p-5 space-y-4 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-csOrange font-tactical font-bold text-sm">
+                <i class="fa-solid fa-sliders"></i> CẤU HÌNH PHẦN THƯỞNG
+              </div>
+              <p class="text-xs text-slate-400">
+                Mặc định mỗi lần nạp mã sẽ cộng <strong class="text-green-400 font-mono">$100.00</strong> vào tài khoản người dùng.
+              </p>
+            </div>
+
+            <form onsubmit="app.submitGiftRewardUpdate(event)" class="space-y-3">
+              <div>
+                <label class="block text-slate-400 mb-1 font-tactical text-xs">TIỀN THƯỞNG CHO MÃ HIỆN HÀNH ($):</label>
+                <input type="number" id="adm-gift-reward-input" step="1.0" min="1" max="1000" required value="100" class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded-lg font-mono text-white text-base focus:outline-none focus:border-csOrange">
+              </div>
+              <button type="submit" class="w-full py-2.5 bg-slate-800 hover:bg-csOrange hover:text-black text-slate-200 font-tactical font-bold text-xs rounded-lg transition border border-csBorder">
+                <i class="fa-solid fa-floppy-disk"></i> LƯU GIÁ TRỊ THƯỞNG
+              </button>
+            </form>
+
+            <div class="text-[11px] text-slate-500 font-mono border-t border-csBorder/60 pt-2">
+              Chính sách: Mỗi tài khoản chỉ nạp được 1 lần cho mỗi mã giờ đó.
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Redemptions Table -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl overflow-hidden shadow-xl space-y-2 p-4">
+          <div class="flex items-center justify-between pb-2 border-b border-csBorder/60">
+            <h3 class="text-xs font-tactical font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-receipt text-csOrange"></i> 50 LƯỢT NẠP CODE GẦN ĐÂY NHẤT
+            </h3>
+            <button onclick="app.loadAdminGiftcode()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded text-xs font-tactical">
+              <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-tactical border-collapse">
+              <thead>
+                <tr class="bg-[#0b0e14] text-slate-400 border-b border-csBorder font-mono uppercase text-[11px]">
+                  <th class="py-2.5 px-3">Mã Code</th>
+                  <th class="py-2.5 px-3">Người nạp</th>
+                  <th class="py-2.5 px-3">Email</th>
+                  <th class="py-2.5 px-3 text-right">Số tiền nhận</th>
+                  <th class="py-2.5 px-3 text-right">Thời gian nạp</th>
+                </tr>
+              </thead>
+              <tbody id="adm-gift-redemptions-tbody" class="divide-y divide-csBorder/50 font-sans">
+                <tr>
+                  <td colspan="5" class="py-6 text-center text-slate-500 font-tactical">Đang tải lịch sử nạp code...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 4: CASE MANAGER (47 CASES) ================= -->
+      <div id="adm-subtab-cases" class="hidden space-y-4">
+        <!-- Top alert and search -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-tactical font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-boxes-stacked text-csOrange"></i> CẤU HÌNH VÀ ĐIỀU CHỈNH GIÁ RƯƠNG
+            </h3>
+            <p class="text-xs text-slate-400">Tất cả 47 rương đang có mức giá dao động $5.00 - $10.00. Bạn có thể cập nhật giá và bật/tắt từng rương.</p>
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" id="adm-case-search-input" onkeyup="app.filterAdminCases(this.value)" placeholder="Tìm kiếm tên rương..." class="bg-[#0b0e14] border border-csBorder px-3 py-1.5 rounded-lg text-xs font-tactical text-white focus:outline-none focus:border-csOrange">
+            <button onclick="app.loadAdminCases()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-tactical text-slate-300 hover:text-white transition">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cases Table -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-tactical border-collapse">
+              <thead>
+                <tr class="bg-[#0b0e14] text-slate-400 border-b border-csBorder font-mono uppercase text-[11px]">
+                  <th class="py-3 px-4">Ảnh</th>
+                  <th class="py-3 px-4">Tên rương</th>
+                  <th class="py-3 px-4 text-center">Skin bên trong</th>
+                  <th class="py-3 px-4 text-center">Tổng mở</th>
+                  <th class="py-3 px-4 text-center">Giá mở ($)</th>
+                  <th class="py-3 px-4 text-center">Trạng thái</th>
+                  <th class="py-3 px-4 text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="adm-cases-table-body" class="divide-y divide-csBorder/50 font-sans">
+                <tr>
+                  <td colspan="7" class="py-8 text-center text-slate-500 font-tactical">Đang tải danh sách rương...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 5: SERVER LOGS & AUDIT ================= -->
+      <div id="adm-subtab-logs" class="hidden space-y-4">
+        <!-- Log Controls Bar -->
+        <div class="bg-[#131822] border border-csBorder rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <h3 class="text-sm font-tactical font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-terminal text-csOrange"></i> NHẬT KÝ SERVER & AUDIT TRAIL
+            </h3>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs font-tactical">
+            <select id="adm-log-type-select" onchange="app.fetchAdminLogs()" class="bg-[#0b0e14] border border-csBorder px-3 py-1.5 rounded-lg text-white focus:outline-none focus:border-csOrange">
+              <option value="app">App Log (logs/app.log)</option>
+              <option value="audit">Security Audit Log (logs/audit.log)</option>
+              <option value="audit_db">Structured Audit Trail (DB Table)</option>
+            </select>
+            <select id="adm-log-lines-select" onchange="app.fetchAdminLogs()" class="bg-[#0b0e14] border border-csBorder px-2.5 py-1.5 rounded-lg text-white focus:outline-none">
+              <option value="50">50 dòng</option>
+              <option value="100" selected>100 dòng</option>
+              <option value="200">200 dòng</option>
+              <option value="500">500 dòng</option>
+            </select>
+            <button onclick="app.fetchAdminLogs()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 hover:text-white transition flex items-center gap-1.5">
+              <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Terminal Output -->
+        <div id="admin-log-terminal" class="log-terminal">
+          <div>Đang tải log máy chủ...</div>
+        </div>
+
+        <!-- Structured DB Audit Table (shown if selected) -->
+        <div id="admin-audit-db-container" class="hidden bg-[#131822] border border-csBorder rounded-xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-tactical border-collapse">
+              <thead>
+                <tr class="bg-[#0b0e14] text-slate-400 border-b border-csBorder font-mono uppercase text-[11px]">
+                  <th class="py-2.5 px-3">ID</th>
+                  <th class="py-2.5 px-3">Tài khoản</th>
+                  <th class="py-2.5 px-3">Hành động</th>
+                  <th class="py-2.5 px-3">Chi tiết</th>
+                  <th class="py-2.5 px-3">IP Address</th>
+                  <th class="py-2.5 px-3 text-right">Thời gian</th>
+                </tr>
+              </thead>
+              <tbody id="adm-audit-db-tbody" class="divide-y divide-csBorder/50 font-sans">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-csBorder bg-[#080b10] py-6 mt-12 text-xs text-slate-500 w-full">
+    <div class="w-full px-4 sm:px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
+
+      <div>
+        <span class="font-tactical text-slate-300 font-bold">CS2 CASE OPENING SIMULATOR</span> — Hệ thống mô phỏng mở rương Counter-Strike 2 chất lượng cao, hình ảnh sắc nét, đầy đủ tỉ lệ và kho đồ.
+      </div>
+      <div class="flex items-center space-x-4 font-mono">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span> API Status: Operational</span>
+        <span>Version 1.0.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= REVEAL / UNBOX MODAL ================= -->
+  <div id="reveal-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-lg bg-[#131822] border-2 rounded-2xl p-6 shadow-2xl animate-reveal" id="reveal-modal-card">
+      
+      <!-- Hologram shine effect -->
+      <div class="hologram-shine rounded-2xl absolute inset-0 pointer-events-none"></div>
+
+      <!-- Close button -->
+      <button onclick="app.closeRevealModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white z-20 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Content -->
+      <div class="relative z-10 text-center space-y-4">
+        <!-- Rarity Badge & StatTrak -->
+        <div class="flex items-center justify-center gap-2">
+          <span id="reveal-stattrak-badge" class="badge-stattrak hidden">StatTrak™</span>
+          <span id="reveal-rarity-badge" class="font-tactical text-xs font-bold px-2.5 py-0.5 rounded uppercase">COVERT</span>
+        </div>
+
+        <!-- Weapon & Skin Title -->
+        <div>
+          <h2 id="reveal-weapon" class="text-xl font-tactical font-bold text-slate-300">AK-47</h2>
+          <h1 id="reveal-skin-name" class="text-3xl font-tactical font-extrabold text-white tracking-wide">Inheritance</h1>
+        </div>
+
+        <!-- Skin Image Showcase -->
+        <div class="py-4 flex items-center justify-center relative">
+          <div id="reveal-image-glow" class="absolute w-44 h-44 rounded-full filter blur-2xl opacity-40"></div>
+          <img id="reveal-image" src="" alt="Skin" class="max-h-52 object-contain relative z-10 drop-shadow-2xl">
+        </div>
+
+        <!-- Wear Float Meter -->
+        <div class="space-y-1.5 text-left bg-[#0b0e14] p-3 rounded-lg border border-csBorder">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span id="reveal-wear-name" class="text-slate-300 font-bold">Factory New</span>
+            <span class="text-slate-400">Float: <span id="reveal-float-val" class="text-white">0.034128</span></span>
+          </div>
+          <div class="float-gauge-track">
+            <div id="reveal-float-marker" class="float-gauge-marker" style="left: 3.4%;"></div>
+          </div>
+        </div>
+
+        <!-- Market Value -->
+        <div class="flex items-center justify-center gap-3">
+          <div class="text-sm text-slate-400 font-mono">Giá trị thị trường:</div>
+          <div id="reveal-value" class="text-2xl font-tactical font-extrabold text-green-400">$195.00</div>
+        </div>
+
+        <!-- Buttons: Keep vs Quick Sell vs Spec 3D -->
+        <div class="space-y-2.5 pt-2">
+          <button onclick="app.inspectRevealedSkin()" class="w-full py-2.5 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 hover:from-blue-600/60 hover:to-indigo-600/60 border border-blue-500/50 text-blue-300 hover:text-white font-tactical font-bold text-sm rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10">
+            <i class="fa-solid fa-cube text-cyan-400"></i> SOI 3D VẬT PHẨM (SPEC 3D)
+          </button>
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="app.closeRevealModal()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-tactical font-bold text-sm rounded-lg transition">
+              GIỮ TRONG KHO
+            </button>
+            <button id="reveal-sell-btn" onclick="app.sellRevealedItem()" class="py-2.5 bg-csOrange hover:bg-amber-400 text-black font-tactical font-bold text-sm rounded-lg transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-coins"></i> BÁN LẤY <span id="reveal-sell-val">$195.00</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MULTI-REVEAL / MULTI-UNBOX MODAL (x2, x3, x5) ================= -->
+  <div id="multi-reveal-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-5xl bg-[#131822] border-2 border-csOrange/60 rounded-2xl p-6 shadow-2xl space-y-4 animate-reveal max-h-[92vh] flex flex-col">
+      
+      <!-- Close button -->
+      <button onclick="app.closeMultiRevealModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white z-20 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Header with Congratulations & Total Profit/Loss -->
+      <div class="text-center space-y-1">
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-tactical bg-orange-500/20 text-csOrange border border-orange-500/40">
+          <i class="fa-solid fa-trophy"></i> BẠN ĐÃ MỞ THÀNH CÔNG <span id="multi-reveal-count" class="font-bold">5</span> RƯƠNG
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-tactical font-extrabold text-white tracking-wide">
+          VẬT PHẨM NHẬN ĐƯỢC
+        </h2>
+        <div class="flex items-center justify-center gap-4 text-xs font-mono pt-1">
+          <span class="text-slate-400">Tổng chi: <span id="multi-reveal-spent" class="text-white font-bold">$0.00</span></span>
+          <span class="text-slate-500">|</span>
+          <span class="text-slate-400">Tổng giá trị: <span id="multi-reveal-value" class="text-green-400 font-bold">$0.00</span></span>
+          <span class="text-slate-500">|</span>
+          <span id="multi-reveal-profit" class="font-bold">+$0.00 (LÃI)</span>
+        </div>
+      </div>
+
+      <!-- Grid of Cards (up to 5 cards) -->
+      <div id="multi-reveal-grid" class="flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-1">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Bottom action buttons: Keep all vs Sell All from this batch -->
+      <div class="pt-3 border-t border-csBorder flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="text-xs text-slate-400 font-tactical">
+          <i class="fa-solid fa-circle-check text-green-400"></i> Toàn bộ <span id="multi-reveal-bottom-count">5</span> skin đã được chuyển vào kho đồ của bạn
+        </div>
+        <div class="flex items-center space-x-3 w-full sm:w-auto">
+          <button onclick="app.closeMultiRevealModal()" class="flex-1 sm:flex-none px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-tactical font-bold text-sm rounded-lg transition">
+            GIỮ TẤT CẢ VÀO KHO
+          </button>
+          <button id="multi-reveal-sell-all-btn" onclick="app.sellMultiRevealedBatch()" class="flex-1 sm:flex-none px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-black font-tactical font-extrabold text-sm rounded-lg shadow-lg shadow-orange-500/30 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-coins"></i> BÁN TẤT CẢ LẤY <span id="multi-reveal-sell-val">$0.00</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 7-DAY DAILY LOGIN REWARD MODAL ================= -->
+  <div id="daily-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-2xl bg-[#131822] border-2 border-csOrange/60 rounded-2xl p-6 shadow-2xl space-y-4 animate-reveal">
+      <div class="hologram-shine rounded-2xl absolute inset-0 pointer-events-none"></div>
+      
+      <!-- Close button -->
+      <button onclick="app.closeDailyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white z-20 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center space-y-1 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-tactical bg-orange-500/20 text-csOrange border border-orange-500/40">
+          <i class="fa-solid fa-calendar-check text-csOrange"></i> ĐIỂM DANH TÍCH LŨY 7 NGÀY
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-tactical font-black text-white tracking-wide">
+          QUÀ ĐĂNG NHẬP HÀNG NGÀY
+        </h2>
+        <p class="text-slate-300 text-xs sm:text-sm max-w-lg mx-auto">
+          Điểm danh mỗi ngày để tích lũy tiền thưởng mở rương CS2 miễn phí. Duy trì chuỗi 7 ngày liên tiếp để nổ đại thưởng <strong class="text-csGold">$150.00</strong>!
+        </p>
+        <div class="flex items-center justify-center gap-2 text-xs font-mono pt-1 text-slate-400">
+          <span>Chuỗi đăng nhập hiện tại:</span>
+          <span id="daily-streak-count" class="font-bold text-csOrange text-sm">0 / 7 Ngày</span>
+        </div>
+      </div>
+
+      <!-- 7 Days Grid -->
+      <div id="daily-schedule-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5 relative z-10 pt-2">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Action Button & Next Timer -->
+      <div class="pt-3 border-t border-csBorder flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
+        <div id="daily-timer-text" class="text-xs text-slate-400 font-mono">
+          <i class="fa-solid fa-clock text-amber-400 mr-1"></i> Làm mới lúc 00:00 UTC mỗi ngày
+        </div>
+        <button id="btn-claim-daily" onclick="app.claimDailyReward()" class="w-full sm:w-auto px-8 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-500 text-black font-tactical font-extrabold text-sm rounded-lg shadow-lg shadow-orange-500/30 transition transform hover:scale-105 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-gift"></i> <span id="btn-claim-daily-text">NHẬN QUÀ NGAY (+$10.00)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AUTH MODAL (LOGIN / REGISTER / FORGOT PASSWORD) ================= -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-[#131822] border border-csBorder rounded-2xl p-6 shadow-2xl">
+      <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- 2 Tabs: Login / Register (Forgot Password is only triggered via link inside Login) -->
+      <div id="auth-tabs-row" class="flex border-b border-csBorder mb-5">
+        <button id="auth-tab-login" onclick="app.switchAuthTab('login')" class="flex-1 py-2 font-tactical font-bold text-xs sm:text-sm text-csOrange border-b-2 border-csOrange">
+          ĐĂNG NHẬP
+        </button>
+        <button id="auth-tab-register" onclick="app.switchAuthTab('register')" class="flex-1 py-2 font-tactical font-bold text-xs sm:text-sm text-slate-400 hover:text-white">
+          ĐĂNG KÝ
+        </button>
+      </div>
+
+      <!-- Forgot Password Header (Shown ONLY when user clicks 'Quên mật khẩu?') -->
+      <div id="auth-forgot-header" class="hidden mb-4 border-b border-csBorder pb-3 flex items-center justify-between">
+        <div class="font-tactical font-bold text-sm text-csOrange flex items-center gap-2">
+          <i class="fa-solid fa-key"></i> ĐẶT LẠI MẬT KHẨU
+        </div>
+        <button type="button" onclick="app.switchAuthTab('login')" class="text-xs text-slate-400 hover:text-white font-tactical flex items-center gap-1">
+          <i class="fa-solid fa-arrow-left"></i> Quay lại Đăng nhập
+        </button>
+      </div>
+
+      <!-- Unified Auth Form -->
+      <form id="auth-form" onsubmit="app.handleAuthSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1 font-tactical">TÊN ĐĂNG NHẬP:</label>
+          <input type="text" id="auth-username" required placeholder="Nhập tên đăng nhập..." class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-email-field" class="hidden">
+          <label class="block text-slate-400 mb-1 font-tactical">EMAIL (abc@def.com):</label>
+          <input type="text" id="auth-email" placeholder="example@email.com" class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-password-field">
+          <label class="block text-slate-400 mb-1 font-tactical">MẬT KHẨU:</label>
+          <input type="password" id="auth-password" placeholder="Nhập mật khẩu..." class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-confirm-password-field" class="hidden">
+          <label class="block text-slate-400 mb-1 font-tactical">NHẬP LẠI MẬT KHẨU:</label>
+          <input type="password" id="auth-confirm-password" placeholder="Nhập lại mật khẩu..." class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-new-password-field" class="hidden">
+          <label class="block text-slate-400 mb-1 font-tactical">MẬT KHẨU MỚI:</label>
+          <input type="password" id="auth-new-password" placeholder="Nhập mật khẩu mới..." class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-confirm-new-password-field" class="hidden">
+          <label class="block text-slate-400 mb-1 font-tactical">NHẬP LẠI MẬT KHẨU MỚI:</label>
+          <input type="password" id="auth-confirm-new-password" placeholder="Nhập lại mật khẩu mới..." class="w-full bg-[#0b0e14] border border-csBorder p-2.5 rounded text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div id="auth-links-row" class="flex items-center justify-between text-[11px] pt-1">
+          <a href="javascript:void(0)" onclick="app.switchAuthTab('forgot')" class="text-csOrange hover:underline font-mono">Quên mật khẩu?</a>
+          <span class="text-slate-500 font-mono">Số dư mặc định: $0.00</span>
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full py-2.5 mt-2 bg-csOrange hover:bg-amber-400 text-black font-tactical font-bold text-sm rounded-lg transition">
+          ĐĂNG NHẬP
+        </button>
+
+        <div id="auth-forgot-back" class="hidden text-center pt-2">
+          <a href="javascript:void(0)" onclick="app.switchAuthTab('login')" class="text-slate-400 hover:text-white font-tactical text-xs flex items-center justify-center gap-1">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại Đăng nhập
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ================= DEPOSIT MODAL (HOURLY CODE REDEMPTION) ================= -->
+  <div id="deposit-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-[#131822] border-2 border-green-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+      <button onclick="app.closeDepositModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="space-y-1 text-center">
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-tactical bg-green-500/20 text-green-400 border border-green-500/40">
+          <i class="fa-solid fa-gift"></i> GIFTCODE NẠP TIỀN TỰ ĐỘNG
+        </div>
+        <h3 class="text-xl font-tactical font-extrabold text-white flex items-center justify-center gap-2">
+          <i class="fa-solid fa-coins text-csGold"></i> NẠP TIỀN VÀO TÀI KHOẢN
+        </h3>
+        <p class="text-xs text-slate-300">
+          Hệ thống phát mã code 6 chữ số ngẫu nhiên mỗi 1 tiếng. Mỗi tài khoản được nạp 1 lần để nhận ngay <strong class="text-green-400 font-mono font-bold">+$100.00</strong>!
+        </p>
+      </div>
+
+      <!-- Live Hourly Code Announcement Card -->
+      <div class="bg-[#0b0e14] border border-amber-500/40 rounded-xl p-4 text-center space-y-2 relative overflow-hidden">
+        <div class="text-[11px] font-tactical font-bold text-amber-400 tracking-wider">
+          MÃ CODE HOẠT ĐỘNG GIỜ NÀY (+100.00$)
+        </div>
+        <div class="flex items-center justify-center gap-3">
+          <span id="hourly-active-code" class="font-mono text-3xl font-black text-csGold tracking-[0.25em] bg-black/60 px-4 py-1.5 rounded-lg border border-amber-500/30">
+            ------
+          </span>
+          <button type="button" onclick="app.copyHourlyCode()" class="p-2.5 bg-slate-800 hover:bg-csOrange hover:text-black rounded-lg text-slate-300 text-xs font-tactical transition" title="Sao chép & Điền nhanh mã">
+            <i class="fa-solid fa-paste"></i>
+          </button>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-xs font-mono text-slate-400">
+          <span><i class="fa-solid fa-clock text-amber-400"></i> Hết hạn sau:</span>
+          <span id="hourly-code-timer" class="font-bold text-amber-300">59:59</span>
+          <span class="text-slate-600">|</span>
+          <span id="hourly-code-status" class="text-green-400 font-tactical text-[11px] font-bold">CHƯA SỬ DỤNG</span>
+        </div>
+      </div>
+
+      <!-- Code Input Form -->
+      <form onsubmit="app.handleRedeemCode(event)" class="space-y-3 pt-1">
+        <div>
+          <label class="block text-slate-400 mb-1 font-tactical text-xs">NHẬP MÃ 6 CHỮ SỐ:</label>
+          <input type="text" id="deposit-code-input" maxlength="6" required placeholder="Nhập 6 chữ số (ví dụ: 123456)" class="w-full bg-[#0b0e14] border border-csBorder p-3 rounded-lg text-center font-mono text-lg tracking-widest text-white focus:outline-none focus:border-csOrange">
+        </div>
+
+        <button type="submit" id="btn-redeem-code" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-black font-tactical font-black text-sm rounded-lg transition shadow-lg shadow-green-500/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check"></i> XÁC NHẬN NẠP $100.00
+        </button>
+
+        <p class="text-[10px] text-slate-500 text-center font-mono pt-1">
+          * Mỗi mã code 6 chữ số tồn tại đúng 1 tiếng. Mỗi tài khoản chỉ được nạp 1 lần cho mỗi mã.
+        </p>
+      </form>
+    </div>
+  <!-- ================= 3D WEAPON INSPECT / SPEC MODAL ================= -->
+  <div id="inspect-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-3 sm:p-6 backdrop-blur-md">
+    <div class="relative w-full max-w-5xl bg-[#0e131d] border-2 border-csBorder rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-reveal">
+      
+      <!-- Modal Top Bar -->
+      <div class="px-6 py-3.5 border-b border-csBorder/70 flex items-center justify-between bg-[#131824]/90 z-20">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-csOrange animate-pulse"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="inspect-stattrak-badge" class="badge-stattrak text-[10px] hidden">StatTrak™</span>
+              <span id="inspect-rarity-badge" class="font-tactical text-xs font-bold px-2 py-0.5 rounded uppercase">COVERT</span>
+              <span class="text-xs text-slate-400 font-mono">SPEC 3D VIEWER</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-tactical font-black text-white tracking-wide">
+              <span id="inspect-weapon-name" class="text-slate-300">AK-47</span> <span class="text-slate-500">|</span> <span id="inspect-skin-name" class="text-csOrange">Inheritance</span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div id="inspect-price-tag" class="font-tactical font-extrabold text-xl text-green-400 font-mono hidden sm:block">
+            $195.00
+          </div>
+          <button onclick="app.closeInspectModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-red-600/80 text-slate-300 hover:text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3D Canvas Area with Floating HUD Controls -->
+      <div class="relative flex-1 min-h-[420px] sm:min-h-[500px] bg-gradient-to-b from-[#060a14] via-[#0b1020] to-[#060a14] overflow-hidden flex items-center justify-center">
+        <!-- Three.js Canvas Container -->
+        <div id="inspect-3d-canvas-container" class="w-full h-full absolute inset-0"></div>
+
+        <!-- Floating Tactical Overlay Controls (Top Right) -->
+        <div class="absolute top-4 right-4 z-10 flex flex-col gap-2 bg-black/60 backdrop-blur-md p-2 rounded-xl border border-csBorder/60">
+          <div class="text-[9px] font-mono text-slate-400 px-1 uppercase tracking-wider">ÁNH SÁNG (LIGHT)</div>
+          <div class="grid grid-cols-3 gap-1">
+            <button id="inspect-light-studio" onclick="app.changeInspectLight('studio')" class="px-2 py-1 bg-csOrange text-black text-[10px] font-tactical font-bold rounded transition" title="Studio trắng tự nhiên">
+              Studio
+            </button>
+            <button id="inspect-light-sunset" onclick="app.changeInspectLight('sunset')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-tactical font-bold rounded transition" title="Ánh hoàng hôn ấm">
+              Sunset
+            </button>
+            <button id="inspect-light-cyberpunk" onclick="app.changeInspectLight('cyberpunk')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-tactical font-bold rounded transition" title="Neon tím Cyberpunk">
+              Cyber
+            </button>
+          </div>
+
+          <div class="border-t border-slate-700/60 my-0.5"></div>
+
+          <button id="btn-inspect-autorotate" onclick="app.toggleInspectAutoRotate()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-tactical font-bold rounded transition flex items-center justify-between gap-2">
+            <span><i class="fa-solid fa-arrows-rotate text-csOrange"></i> Tự xoay</span>
+            <span id="inspect-autorotate-status" class="text-[9px] text-green-400 font-mono">BẬT</span>
+          </button>
+
+          <button onclick="app.triggerInspectFlip()" class="px-2.5 py-1.5 bg-gradient-to-r from-orange-500/20 to-amber-500/20 hover:from-orange-500/40 hover:to-amber-500/40 border border-orange-500/30 text-amber-300 text-xs font-tactical font-bold rounded transition flex items-center justify-between gap-2" title="Nhấn phím F">
+            <span><i class="fa-solid fa-hand-sparkles text-amber-400"></i> Lật súng</span>
+            <span class="text-[9px] font-mono bg-black/50 px-1 py-0.5 rounded text-slate-300">[F]</span>
+          </button>
+
+          <button onclick="app.resetInspectView()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-tactical font-bold rounded transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-crosshairs text-slate-400"></i> Đặt lại góc nhìn
+          </button>
+        </div>
+
+        <!-- Floating Bottom Interactive Tooltip -->
+        <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800 text-[11px] font-mono text-slate-400 pointer-events-none flex items-center gap-3">
+          <span><i class="fa-solid fa-arrow-pointer text-csOrange"></i> Kéo chuột: Xoay 360°</span>
+          <span class="text-slate-600">|</span>
+          <span><i class="fa-solid fa-magnifying-glass-plus text-blue-400"></i> Cuộn chuột: Thu phóng</span>
+          <span class="text-slate-600">|</span>
+          <span><i class="fa-solid fa-keyboard text-green-400"></i> Phím [F]: Lật inspect</span>
+        </div>
+      </div>
+
+      <!-- Bottom Specs & Float Meter Bar Panel -->
+      <div class="bg-[#101520] border-t border-csBorder/80 p-4 sm:p-5 space-y-3 z-20">
+        
+        <!-- Wear Float Meter Gauge -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400">ĐỘ MÒN (WEAR):</span>
+              <span id="inspect-wear-text" class="text-white font-bold">Factory New</span>
+            </div>
+            <div class="text-slate-400">
+              FLOAT VALUE: <span id="inspect-float-value" class="text-csOrange font-bold font-mono">0.03412859</span>
+            </div>
+          </div>
+
+          <!-- Multicolor Float Gauge Track -->
+          <div class="relative w-full h-3 rounded-full overflow-hidden bg-slate-800 border border-csBorder/60 flex">
+            <div class="h-full bg-blue-500" style="width: 7%;" title="Factory New (0.00 - 0.07)"></div>
+            <div class="h-full bg-green-500" style="width: 8%;" title="Minimal Wear (0.07 - 0.15)"></div>
+            <div class="h-full bg-yellow-500" style="width: 23%;" title="Field-Tested (0.15 - 0.38)"></div>
+            <div class="h-full bg-orange-500" style="width: 7%;" title="Well-Worn (0.38 - 0.45)"></div>
+            <div class="h-full bg-red-600" style="width: 55%;" title="Battle-Scarred (0.45 - 1.00)"></div>
+            <!-- Dynamic Needle Marker -->
+            <div id="inspect-float-needle" class="absolute top-0 bottom-0 w-1.5 bg-white border border-black shadow-lg transform -translate-x-1/2 transition-all duration-300" style="left: 3.4%;"></div>
+          </div>
+          <div class="flex justify-between text-[9px] font-mono text-slate-500 px-0.5">
+            <span>0.00 (FN)</span>
+            <span>0.07 (MW)</span>
+            <span>0.15 (FT)</span>
+            <span>0.38 (WW)</span>
+            <span>0.45 (BS)</span>
+            <span>1.00</span>
+          </div>
+        </div>
+
+        <!-- Technical Specification Data Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <div class="bg-[#090c12] p-2.5 rounded-lg border border-csBorder/50">
+            <div class="text-[10px] font-mono text-slate-500 uppercase">MẪU HOA VĂN (PATTERN SEED)</div>
+            <div id="inspect-paint-seed" class="text-sm font-mono font-bold text-white mt-0.5">421</div>
+          </div>
+          <div class="bg-[#090c12] p-2.5 rounded-lg border border-csBorder/50">
+            <div class="text-[10px] font-mono text-slate-500 uppercase">PHONG CÁCH HOÀN THIỆN</div>
+            <div id="inspect-finish-style" class="text-sm font-tactical font-bold text-white mt-0.5 truncate">Custom Paint Job</div>
+          </div>
+          <div class="bg-[#090c12] p-2.5 rounded-lg border border-csBorder/50">
+            <div class="text-[10px] font-mono text-slate-500 uppercase">STATTRAK™ BỘ ĐẾM HẠ GỤC</div>
+            <div id="inspect-stattrak-count" class="text-sm font-mono font-bold text-amber-400 mt-0.5">None</div>
+          </div>
+          <div class="bg-[#090c12] p-2.5 rounded-lg border border-csBorder/50">
+            <div class="text-[10px] font-mono text-slate-500 uppercase">GIÁ TRỊ THỊ TRƯỜNG</div>
+            <div id="inspect-market-value" class="text-sm font-mono font-bold text-green-400 mt-0.5">$195.00</div>
+          </div>
+        </div>
+
+        <!-- Bottom Action Buttons -->
+        <div class="flex items-center justify-end gap-3 pt-1">
+          <button onclick="app.closeInspectModal()" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white font-tactical font-bold text-xs rounded-lg transition">
+            ĐÓNG SPEC 3D
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ADMIN USER BALANCE MODAL ================= -->
+  <div id="admin-user-balance-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-[#131822] border-2 border-csOrange/60 rounded-2xl p-6 shadow-2xl space-y-4 animate-reveal">
+      <div class="flex items-center justify-between border-b border-csBorder pb-3">
+        <h3 class="font-tactical font-bold text-lg text-white flex items-center gap-2">
+          <i class="fa-solid fa-coins text-csGold"></i> ĐIỀU CHỈNH SỐ DƯ TÀI KHOẢN
+        </h3>
+        <button onclick="app.closeAdminBalanceModal()" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="bg-[#0b0e14] p-3 rounded-lg border border-csBorder space-y-1">
+        <div class="text-xs text-slate-400 font-tactical">TÀI KHOẢN: <span id="adm-bal-modal-username" class="text-white font-bold">user123</span></div>
+        <div class="text-xs text-slate-400 font-tactical">SỐ DƯ HIỆN TẠI: <span id="adm-bal-modal-current" class="text-green-400 font-mono font-bold">$0.00</span></div>
+      </div>
+
+      <form onsubmit="app.submitUserBalanceAdjustment(event)" class="space-y-4">
+        <input type="hidden" id="adm-bal-modal-userid" value="">
+        
+        <div>
+          <label class="block text-slate-400 mb-1 font-tactical text-xs">CHẾ ĐỘ ĐIỀU CHỈNH:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="adm-bal-mode-set" onclick="app.setBalanceAdjustMode('set')" class="py-2 rounded-lg font-tactical text-xs font-bold bg-csOrange text-black">
+              = Thiết lập số dư mới
+            </button>
+            <button type="button" id="adm-bal-mode-add" onclick="app.setBalanceAdjustMode('add')" class="py-2 rounded-lg font-tactical text-xs font-bold bg-[#0b0e14] border border-csBorder text-slate-300">
+              + Cộng thêm vào ví
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label id="adm-bal-modal-amount-label" class="block text-slate-400 mb-1 font-tactical text-xs">SỐ TIỀN MỚI ($):</label>
+          <input type="number" id="adm-bal-modal-amount" step="0.01" min="0" required placeholder="Ví dụ: 100.00" class="w-full bg-[#0b0e14] border border-csBorder p-3 rounded-lg font-mono text-white text-lg focus:outline-none focus:border-csOrange">
+        </div>
+
+        <div class="flex items-center space-x-3 pt-2">
+          <button type="button" onclick="app.closeAdminBalanceModal()" class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-tactical font-bold text-xs rounded-lg transition">
+            HỦY
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-csOrange hover:bg-amber-400 text-black font-tactical font-black text-xs rounded-lg transition">
+            XÁC NHẬN CẬP NHẬT
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= ADMIN USER INVENTORY INSPECT MODAL ================= -->
+  <div id="admin-user-inventory-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="relative w-full max-w-4xl bg-[#131822] border-2 border-csBorder rounded-2xl p-6 shadow-2xl flex flex-col max-h-[85vh] animate-reveal">
+      <div class="flex items-center justify-between border-b border-csBorder pb-3">
+        <div>
+          <h3 class="font-tactical font-bold text-lg text-white flex items-center gap-2">
+            <i class="fa-solid fa-box-archive text-csOrange"></i> KHO ĐỒ CỦA: <span id="adm-inv-modal-username" class="text-csOrange font-bold">user</span>
+          </h3>
+          <p class="text-xs text-slate-400">Tổng cộng: <span id="adm-inv-modal-count" class="font-mono text-white font-bold">0</span> vật phẩm</p>
+        </div>
+        <button onclick="app.closeAdminUserInventoryModal()" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div id="adm-inv-modal-grid" class="flex-1 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 p-2 my-4">
+        <!-- Rendered items -->
+      </div>
+
+      <div class="border-t border-csBorder pt-3 flex justify-end">
+        <button onclick="app.closeAdminUserInventoryModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white font-tactical font-bold text-xs rounded-lg transition">
+          ĐÓNG
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local Three.js 3D Engine & Procedural Web Audio Engine & Main App JS -->
+  <script src="/static/js/three.min.js"></script>
+  <script src="/static/js/inspect3d.js"></script>
+  <script src="/static/js/sounds.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
