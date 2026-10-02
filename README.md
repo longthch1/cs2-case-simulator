@@ -27,8 +27,12 @@ cs2-case-simulator-php/
 ├── index.php             # Điểm vào chính phục vụ Frontend SPA
 ├── apache-vhost.conf     # Mẫu cấu hình Apache VirtualHost
 ├── Dockerfile            # Docker build PHP 8.2 + Apache + PDO MySQL
+├── setup_ubuntu.sh      # Script cài đặt tự động 1 lệnh trên Ubuntu 20.04/22.04/24.04
+├── cs2-simulator.conf   # File cấu hình VirtualHost cho Apache Ubuntu
+├── start.sh             # Script khởi động dịch vụ trên Linux / Ubuntu
 ├── docker-compose.yml    # Stack 1-click: Apache + PHP + MySQL 8.0 + phpMyAdmin
 ├── start.bat             # Script khởi động tự động trên Windows
+├── .env.example          # Mẫu cấu hình môi trường (.env)
 ├── config/
 │   ├── config.php        # Cấu hình DB, Secret Key, CORS, Admin info
 │   └── database.php      # PDO Connection singleton, password hashing, audit log
@@ -60,7 +64,28 @@ cs2-case-simulator-php/
 
 ## 🛠️ Hướng dẫn cài đặt & Khởi chạy
 
-### Cách 1: Chạy bằng Docker Compose (Khuyên dùng — 1 Click là chạy)
+### 🐧 Cách 1: Chạy trực tiếp trên Ubuntu (Khuyên dùng — 1 lệnh tự động)
+
+Hỗ trợ **Ubuntu 20.04, 22.04, 24.04 LTS**:
+
+1. Tải source code về máy chủ Ubuntu:
+   ```bash
+   git clone -b php-apache-mysql https://github.com/longthch1/cs2-case-simulator.git
+   cd cs2-case-simulator
+   ```
+
+2. Chạy file cài đặt tự động (script sẽ tự cài Apache, PHP, MySQL, nạp 47 rương, 1293 skin và kích hoạt site):
+   ```bash
+   sudo bash setup_ubuntu.sh
+   ```
+
+3. Mở trình duyệt truy cập:
+   - `http://IP_CUA_MAY_CHU/` hoặc `http://localhost/`
+   - Đăng nhập Admin: `admin` / `admin`
+
+---
+
+### 🐳 Cách 2: Chạy bằng Docker Compose trên Ubuntu hoặc Windows
 
 1. Mở Docker Desktop.
 2. Mở terminal tại thư mục dự án và chạy:
