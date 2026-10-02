@@ -28,7 +28,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET_DIR="/var/www/html/cs2-case-simulator"
+TARGET_DIR="/var/www/html"
 
 DB_NAME="cs2_simulator"
 DB_USER="cs2_user"
@@ -56,12 +56,16 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 echo -e "${GREEN}[OK] Đã cài đặt xong các gói cần thiết!${NC}"
 
-# ── 2. Kích hoạt module Apache ────────────────────────────────────────────────
+# ── 2. Kích hoạt module Apache & AllowOverride ────────────────────────────────
 echo -e "${BLUE}[2/6] Đang cấu hình và kích hoạt Apache modules...${NC}"
-a2enmod rewrite headers deflate expires ssl > /dev/null 2>&1 || true
+a2enmod rewrite headers deflate expires > /dev/null 2>&1 || true
+
+# Đảm bảo AllowOverride All cho /var/www/ trong apache2.conf để .htaccess hoạt động
+if [ -f /etc/apache2/apache2.conf ]; then
+    sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+fi
 
 systemctl enable apache2
-systemctl restart apache2
 echo -e "${GREEN}[OK] Apache đã sẵn sàng với mod_rewrite và headers!${NC}"
 
 # ── 3. Khởi tạo Cơ sở dữ liệu MySQL ───────────────────────────────────────────
@@ -92,10 +96,15 @@ if [ -f "${SCRIPT_DIR}/sql/seed_full_data.sql" ]; then
     echo -e "${GREEN}[OK] Đã nạp thành công toàn bộ rương và skin CS2!${NC}"
 fi
 
-# ── 4. Triển khai mã nguồn vào /var/www/html/cs2-case-simulator ───────────────
+# ── 4. Triển khai mã nguồn vào /var/www/html (Gốc web server) ─────────────────
 echo -e "${BLUE}[4/6] Đang sao chép mã nguồn vào ${TARGET_DIR}...${NC}"
+
+# Xóa trang mặc định "Apache2 Default Page" của Ubuntu
+rm -f "${TARGET_DIR}/index.html"
+
+# Sao chép toàn bộ code dự án vào /var/www/html
 mkdir -p "${TARGET_DIR}"
-cp -r "${SCRIPT_DIR}/"* "${TARGET_DIR}/"
+cp -rf "${SCRIPT_DIR}/"* "${TARGET_DIR}/"
 
 # Tạo file .env cho Ubuntu
 cat > "${TARGET_DIR}/.env" <<EOF
@@ -114,37 +123,23 @@ mkdir -p "${TARGET_DIR}/logs"
 chown -R www-data:www-data "${TARGET_DIR}"
 find "${TARGET_DIR}" -type d -exec chmod 755 {} +
 find "${TARGET_DIR}" -type f -exec chmod 644 {} +
-chmod -R 775 "${TARGET_DIR}/logs"
+chmod -R 777 "${TARGET_DIR}/logs"
 chmod +x "${TARGET_DIR}/setup_ubuntu.sh" 2>/dev/null || true
 
 # ── 6. Cấu hình VirtualHost Apache ────────────────────────────────────────────
-echo -e "${BLUE}[6/6] Đang kích hoạt VirtualHost Apache...${NC}"
+echo -e "${BLUE}[6/6] Đang cấu hình VirtualHost Apache...${NC}"
 VHOST_FILE="/etc/apache2/sites-available/cs2-simulator.conf"
 
-if [ -f "${SCRIPT_DIR}/cs2-simulator.conf" ]; then
-    cp "${SCRIPT_DIR}/cs2-simulator.conf" "${VHOST_FILE}"
-else
-    cat > "${VHOST_FILE}" <<EOF
-<VirtualHost *:80>
-    DocumentRoot ${TARGET_DIR}
+cp "${SCRIPT_DIR}/cs2-simulator.conf" "${VHOST_FILE}"
 
-    <Directory ${TARGET_DIR}>
-        Options -Indexes +FollowSymLinks
-        AllowOverride All
-        Require all granted
-        DirectoryIndex index.php index.html
-        SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=\$1
-    </Directory>
-
-    ErrorLog \${APACHE_LOG_DIR}/cs2_error.log
-    CustomLog \${APACHE_LOG_DIR}/cs2_access.log combined
-</VirtualHost>
-EOF
-fi
-
-# Kích hoạt site và khởi động lại Apache
-a2ensite cs2-simulator.conf > /dev/null 2>&1
+# Tắt site mặc định 000-default và xóa liên kết của nó
 a2dissite 000-default.conf > /dev/null 2>&1 || true
+rm -f /etc/apache2/sites-enabled/000-default.conf
+
+# Kích hoạt site cs2-simulator
+a2ensite cs2-simulator.conf > /dev/null 2>&1
+
+# Khởi động lại Apache
 systemctl restart apache2
 
 # Lấy địa chỉ IP máy chủ
@@ -156,8 +151,8 @@ echo -e "${GREEN}   🎉 CÀI ĐẶT THÀNH CÔNG CS2 CASE OPENING SIMULATOR!   
 echo -e "${GREEN}============================================================${NC}"
 echo ""
 echo -e "${YELLOW}🌐 ĐỊA CHỈ TRUY CẬP WEBSITE:${NC}"
-echo -e "   - Cục bộ (Local):   ${CYAN}http://localhost${NC}"
-echo -e "   - Mạng ngoài (IP):  ${CYAN}http://${SERVER_IP}${NC}"
+echo -e "   - Mạng ngoài / IP:  ${CYAN}http://${SERVER_IP}/${NC}"
+echo -e "   - Cục bộ (Local):   ${CYAN}http://localhost/${NC}"
 echo ""
 echo -e "${YELLOW}🔑 THÔNG TIN TÀI KHOẢN ADMIN QUẢN TRỊ:${NC}"
 echo -e "   - Tên đăng nhập:    ${CYAN}admin${NC}"
@@ -170,6 +165,6 @@ echo -e "   - User:             ${CYAN}${DB_USER}${NC}"
 echo -e "   - Password:         ${CYAN}${DB_PASS}${NC}"
 echo ""
 echo -e "${YELLOW}📋 CÁC LỆNH HỮU ÍCH:${NC}"
-echo -e "   - Xem log web:      ${CYAN}tail -f ${TARGET_DIR}/logs/app.log${NC}"
+echo -e "   - Xem log web:      ${CYAN}tail -f /var/www/html/logs/app.log${NC}"
 echo -e "   - Khởi động lại:    ${CYAN}sudo systemctl restart apache2 mysql${NC}"
 echo -e "${GREEN}============================================================${NC}"
