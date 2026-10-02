@@ -11,7 +11,7 @@ use CS2\Utils\Logger;
  * The legacy FastAPI implementation kept its authoritative catalog in
  * app/seed_data.py (PRESET_CASES). The PHP port uses database/catalog.php,
  * generated from that exact dataset, so the migration keeps every original
- * case and skin instead of the smaller curated cases-data.js subset.
+ * case, skin, rarity, color, tier, float range, image and source price.
  */
 $catalogFile = __DIR__ . '/catalog.php';
 if (!is_file($catalogFile)) {
@@ -94,13 +94,14 @@ Database::transaction(function($pdo) use ($data, &$caseCount, &$itemCount, &$uni
                 (string)($item['weapon'] ?? ''),
                 (string)($item['skin'] ?? ''),
                 (string)($item['rarity'] ?? ''),
-                (string)($item['rarityName'] ?? ''),
-                (string)($item['rarityColor'] ?? '#4b69ff'),
-                (int)($item['rarityTier'] ?? 1),
+                // database/catalog.php preserves the original Python field names.
+                (string)($item['name'] ?? $item['rarityName'] ?? ''),
+                (string)($item['color'] ?? $item['rarityColor'] ?? '#4b69ff'),
+                (int)($item['tier'] ?? $item['rarityTier'] ?? 1),
                 (string)($item['image'] ?? ''),
-                (float)($item['basePrice'] ?? 0),
-                (float)($item['minFloat'] ?? 0),
-                (float)($item['maxFloat'] ?? 1),
+                (float)($item['price'] ?? $item['basePrice'] ?? 0),
+                (float)($item['min_float'] ?? $item['minFloat'] ?? 0),
+                (float)($item['max_float'] ?? $item['maxFloat'] ?? 1),
                 // The original Python seed explicitly stored can_be_stattrak=1
                 // for every preset item; keep that behavior for the full catalog.
                 1
