@@ -717,3 +717,77 @@ AttributeError: 'Settings' object has no attribute 'DATA_DIR'
 [2026-09-30 09:03:22] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (18.2ms)
 [2026-09-30 09:04:25] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (20.4ms)
 [2026-09-30 09:04:34] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (18.1ms)
+[2026-09-30 10:42:11] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (9.3ms)
+[2026-09-30 10:42:11] [INFO] [cs2_simulator:70] GET /api/cases - 200 (15.4ms)
+[2026-09-30 10:42:11] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (17.5ms)
+[2026-09-30 10:42:12] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-09-30 10:42:12] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-09-30 10:42:12] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-09-30 10:42:12] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-09-30 10:42:12] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-09-30 10:42:21] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.2ms)
+[2026-09-30 10:42:22] [INFO] [cs2_simulator:70] POST /api/daily/claim - 200 (8.0ms)
+[2026-09-30 10:42:22] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (7.3ms)
+[2026-09-30 10:42:22] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (5.2ms)
+[2026-09-30 10:42:24] [INFO] [cs2_simulator:64] Generated new hourly 6-digit code: 601807, valid until 2026-09-30 04:42:24
+[2026-09-30 10:42:24] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (18.0ms)
+[2026-09-30 10:42:27] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (9.2ms)
+[2026-09-30 10:42:27] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.8ms)
+[2026-09-30 10:42:30] [INFO] [cs2_simulator:70] GET /api/cases/crate-4004 - 200 (3.5ms)
+[2026-09-30 10:42:32] [INFO] [cs2_simulator:70] POST /api/cases/crate-4004/open - 200 (12.1ms)
+[2026-09-30 10:42:45] [INFO] [cs2_simulator:70] POST /api/cases/crate-4004/open - 200 (10.7ms)
+[2026-09-30 10:42:54] [INFO] [cs2_simulator:70] POST /api/cases/crate-4004/open - 200 (9.6ms)
+[2026-09-30 10:43:03] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (6.9ms)
+[2026-09-30 10:43:07] [INFO] [cs2_simulator:70] POST /api/cases/crate-4004/open - 200 (9.9ms)
+[2026-09-30 10:43:14] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (7.1ms)
+[2026-09-30 10:43:17] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (5.9ms)
+[2026-09-30 10:43:22] [INFO] [cs2_simulator:70] POST /api/tradeup - 200 (20.3ms)
+[2026-09-30 10:43:22] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (7.5ms)
+[2026-09-30 10:43:33] [INFO] [cs2_simulator:36] Shutting down CS2 Case Simulator Backend...
+[2026-10-02 09:14:30] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-10-02 09:14:30] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-10-02 09:14:30] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-10-02 09:14:30] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-10-02 09:14:30] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-10-02 09:14:31] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (7.6ms)
+[2026-10-02 09:14:31] [INFO] [cs2_simulator:70] GET /api/cases - 200 (17.0ms)
+[2026-10-02 09:14:31] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (30.6ms)
+[2026-10-02 09:14:35] [INFO] [cs2_simulator:70] GET /api/cases/crate-4403 - 200 (3.9ms)
+[2026-10-02 09:14:41] [INFO] [cs2_simulator:64] Generated new hourly 6-digit code: 655293, valid until 2026-10-02 03:14:41
+[2026-10-02 09:14:41] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (8.6ms)
+[2026-10-02 09:14:43] [INFO] [cs2_simulator:70] POST /api/wallet/redeem-code - 200 (10.9ms)
+[2026-10-02 09:14:43] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (6.1ms)
+[2026-10-02 09:14:52] [INFO] [cs2_simulator:70] POST /api/cases/crate-4403/open - 200 (14.6ms)
+[2026-10-02 09:14:57] [INFO] [cs2_simulator:70] POST /api/cases/crate-4403/open - 200 (10.3ms)
+[2026-10-02 09:14:59] [INFO] [cs2_simulator:70] POST /api/cases/crate-4403/open - 200 (10.9ms)
+[2026-10-02 09:15:01] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (6.6ms)
+[2026-10-02 09:15:05] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (18.3ms)
+[2026-10-02 09:15:12] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (6.5ms)
+[2026-10-02 09:15:19] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (4.8ms)
+[2026-10-02 09:30:49] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-10-02 09:30:49] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (7.1ms)
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:70] GET /api/cases - 200 (15.8ms)
+[2026-10-02 09:30:50] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (19.5ms)
+[2026-10-02 09:36:27] [INFO] [cs2_simulator:30] Starting CS2 Case Opening Simulator Backend...
+[2026-10-02 09:36:27] [INFO] [cs2_simulator:50] Initializing database schema...
+[2026-10-02 09:36:27] [INFO] [cs2_simulator:244] Admin user credentials verified for: admin
+[2026-10-02 09:36:27] [INFO] [cs2_simulator:246] Database schema initialized successfully.
+[2026-10-02 09:36:27] [INFO] [cs2_simulator:33] System ready! Admin user: 'admin' (Password: 'admin')
+[2026-10-02 09:36:38] [INFO] [cs2_simulator:70] POST /api/auth/login - 200 (30.0ms)
+[2026-10-02 09:36:38] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (20.7ms)
+[2026-10-02 09:36:40] [INFO] [cs2_simulator:70] GET /api/auth/me - 200 (8.4ms)
+[2026-10-02 09:36:40] [INFO] [cs2_simulator:70] GET /api/cases - 200 (14.2ms)
+[2026-10-02 09:36:40] [INFO] [cs2_simulator:70] GET /api/daily/status - 200 (16.1ms)
+[2026-10-02 09:36:45] [INFO] [cs2_simulator:70] GET /api/cases/crate-4403 - 200 (3.9ms)
+[2026-10-02 09:36:55] [INFO] [cs2_simulator:70] GET /api/cases/crate-4747 - 200 (3.3ms)
+[2026-10-02 09:37:01] [INFO] [cs2_simulator:70] POST /api/cases/crate-4747/open - 200 (11.0ms)
+[2026-10-02 09:37:17] [INFO] [cs2_simulator:70] POST /api/cases/crate-4747/open - 200 (10.8ms)
+[2026-10-02 09:37:26] [INFO] [cs2_simulator:70] POST /api/cases/crate-4747/open - 200 (14.8ms)
+[2026-10-02 09:37:35] [INFO] [cs2_simulator:70] POST /api/cases/crate-4747/open - 200 (30.0ms)
+[2026-10-02 09:37:52] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (23.5ms)
+[2026-10-02 09:37:56] [INFO] [cs2_simulator:70] GET /api/inventory - 200 (19.3ms)
+[2026-10-02 09:38:04] [INFO] [cs2_simulator:70] GET /api/wallet/active-code - 200 (5.5ms)

@@ -154,3 +154,19 @@
 [2026-09-29 20:31:56] [AUDIT] User admin opened 5x Operation Phoenix Weapon Case for $36.00. Total drop: $3.10. IP: 127.0.0.1
 [2026-09-29 20:31:58] [AUDIT] User admin opened 5x Operation Phoenix Weapon Case for $36.00. Total drop: $2.76. IP: 127.0.0.1
 [2026-09-30 09:03:12] [AUDIT] User admin claimed Day 2 reward: +$15.0 (New balance: $12193.73)
+[2026-09-30 10:42:22] [AUDIT] User 111111 claimed Day 2 reward: +$15.0 (New balance: $16.63)
+[2026-09-30 10:42:27] [AUDIT] User 111111 redeemed code 601807: +$100.00. New balance: $116.63
+[2026-09-30 10:42:32] [AUDIT] User 111111 opened 1x CS:GO Weapon Case 2 for $8.80. Total drop: $0.98. IP: 127.0.0.1
+[2026-09-30 10:42:45] [AUDIT] User 111111 opened 5x CS:GO Weapon Case 2 for $44.00. Total drop: $27.13. IP: 127.0.0.1
+[2026-09-30 10:42:54] [AUDIT] User 111111 opened 5x CS:GO Weapon Case 2 for $44.00. Total drop: $16.13. IP: 127.0.0.1
+[2026-09-30 10:43:07] [AUDIT] User 111111 opened 2x CS:GO Weapon Case 2 for $17.60. Total drop: $0.58. IP: 127.0.0.1
+[2026-09-30 10:43:22] [AUDIT] User 111111 executed Trade-Up: 10x Tier 0 -> 1x M4A1-S | Blood Tiger ($0.41)
+[2026-10-02 09:14:43] [AUDIT] User 111111 redeemed code 655293: +$100.00. New balance: $102.23
+[2026-10-02 09:14:52] [AUDIT] User 111111 opened 5x Spectrum 2 Case for $28.50. Total drop: $5.05. IP: 127.0.0.1
+[2026-10-02 09:14:57] [AUDIT] User 111111 opened 5x Spectrum 2 Case for $28.50. Total drop: $8.08. IP: 127.0.0.1
+[2026-10-02 09:14:59] [AUDIT] User 111111 opened 5x Spectrum 2 Case for $28.50. Total drop: $9.47. IP: 127.0.0.1
+[2026-10-02 09:36:38] [AUDIT] User logged in: admin (ID: 1) from 127.0.0.1
+[2026-10-02 09:37:01] [AUDIT] User admin opened 5x Snakebite Case for $27.00. Total drop: $12.82. IP: 127.0.0.1
+[2026-10-02 09:37:17] [AUDIT] User admin opened 5x Snakebite Case for $27.00. Total drop: $5.50. IP: 127.0.0.1
+[2026-10-02 09:37:26] [AUDIT] User admin opened 5x Snakebite Case for $27.00. Total drop: $5.98. IP: 127.0.0.1
+[2026-10-02 09:37:35] [AUDIT] User admin opened 5x Snakebite Case for $27.00. Total drop: $161.92. IP: 127.0.0.1
